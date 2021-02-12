@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1098822240061",
+    "firebase_url": "https://telemed-doc-b4414.firebaseio.com",
+    "project_id": "telemed-doc-b4414",
+    "storage_bucket": "telemed-doc-b4414.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1098822240061:android:88b51feb9c61b19c952754",
+        "android_client_info": {
+          "package_name": "com.example.telemed_doc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1098822240061-mv0l4mv0idil4af3g92m87dmrib2luqh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfhsYwEZ-ufWhY7pp1lJ8kG-VHLusX76Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1098822240061-mv0l4mv0idil4af3g92m87dmrib2luqh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
