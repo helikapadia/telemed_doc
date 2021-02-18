@@ -28,6 +28,11 @@ class LoginPassword extends StatelessWidget {
                   onChanged: (value) {
                     loginBloc.passwordChanged(value);
                   },
+                  validator: (value) {
+                    if (value.length < 3) {
+                      return 'Minimum 8 characters, one alphanumberic and one uppercase letter';
+                    }
+                  },
                   decoration: InputDecoration(
                     suffixIcon:
                         !snapshot.hasError && loginBloc.passwordValue != null

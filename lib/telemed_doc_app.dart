@@ -14,25 +14,24 @@ import 'package:telemed_doc/screen/profile_screen/emergency_profile_screen/emerg
 import 'package:telemed_doc/screen/profile_screen/profile_detail.dart';
 import 'package:telemed_doc/screen/profile_screen/profile_screen.dart';
 import 'package:telemed_doc/screen/registration/registration_screen.dart';
-import 'package:telemed_doc/screen/scan_doc/scan_doc.dart';
+import 'package:telemed_doc/screen/scan_doc/scan_document.dart';
+import 'package:telemed_doc/screen/settings_screen/biometric_auth.dart';
+import 'package:telemed_doc/screen/settings_screen/settings_screen.dart';
 import 'package:telemed_doc/screen/upload_detail_screen/upload_detail_screen.dart';
 import 'package:telemed_doc/screen/user_details_profile_screen/user_details_profile_screen.dart';
 import 'package:telemed_doc/util/app_preference.dart';
 import 'package:telemed_doc/util/constant.dart';
 
-class TeleMedDocApp extends StatefulWidget {
-  @override
-  _TeleMedDocAppState createState() => _TeleMedDocAppState();
-}
+class TeleMedDocApp extends StatelessWidget {
+  final bool authValue;
 
-class _TeleMedDocAppState extends State<TeleMedDocApp> {
-  @override
+  const TeleMedDocApp({this.authValue});
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'TeleMed Doc',
       theme: ThemeData.light(),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
+      initialRoute: authValue != null && authValue ? BIOMETRIC_AUTH : '/',
       onUnknownRoute: unknownRoutes,
       onGenerateRoute: routes,
     );
@@ -44,25 +43,24 @@ class _TeleMedDocAppState extends State<TeleMedDocApp> {
     });
   }
 
-  MaterialPageRoute resolveAuth() {
-    var user = FirebaseAuth.instance.currentUser.uid;
-    AppPreference.getStringF(user).then((userId) {
-      debugPrint(user);
-      if (user != null) {
-        if (CITY_KEY == null) {
-          return MaterialPageRoute(builder: (context) {
-            return LoginScreen();
-          });
+  MaterialPageRoute resolveAuth(context) {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    User user = auth.currentUser;
+    AppPreference.getStringF(USER_ID_KEY).then((userId) {
+      if (user.uid != null) {
+        if (user.uid != null && CITY_KEY == null) {
+          Navigator.pushNamedAndRemoveUntil(
+              context, ADD_CITY, (route) => false);
         } else {
-          return MaterialPageRoute(builder: (context) {
-            return HomeScreen();
-          });
+          Navigator.pushNamedAndRemoveUntil(
+              context, HOME_SCREEN, (route) => false);
         }
       } else {
-        return MaterialPageRoute(builder: (context) {
-          return LoginScreen();
-        });
+        Navigator.pushNamedAndRemoveUntil(
+            context, LOGIN_ROUTE, (route) => false);
       }
+    }).catchError((errors) {
+      Navigator.pushNamedAndRemoveUntil(context, LOGIN_ROUTE, (route) => false);
     });
   }
 
@@ -155,7 +153,22 @@ class _TeleMedDocAppState extends State<TeleMedDocApp> {
         break;
       case SCAN_DOC_ROUTE:
         return MaterialPageRoute(builder: (context) {
-          return ScanDoc();
+          return ScanDocument();
+        });
+        break;
+      case ADD_MORE_IMAGE:
+        return MaterialPageRoute(builder: (context) {
+          return AddMoreImage();
+        });
+        break;
+      case BIOMETRIC_AUTH:
+        return MaterialPageRoute(builder: (context) {
+          return BiometricAuth();
+        });
+        break;
+      case SETTINGS_SCREEN:
+        return MaterialPageRoute(builder: (context) {
+          return SettingsScreen();
         });
         break;
       default:

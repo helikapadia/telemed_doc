@@ -22,9 +22,11 @@ const DOCTOR_DETAIL_PROFILE_SCREEN = "/doctorDetailProfileScreen";
 const DAILY_MEDICINE_PROFILE_SCREEN = "/dailyMedicineProfileScreen";
 const EMERGENCY_PROFILE_SCREEN = "/emergencyProfileScreen";
 const SCAN_DOC_ROUTE = "/scanDocRoute";
-
+const ADD_MORE_IMAGE = "/addMoreImage";
+const BIOMETRIC_AUTH = "/biometricAuth";
 //text
 const EMAIL_ERROR = "Enter valid Email";
+const GENDER = "Gender";
 const PASSWORD_ERROR =
     "Minimum 8 characters,alphanumberic and one uppercase letter";
 const FULL_NAME_ERROR = "Enter valid Full Name";
@@ -58,6 +60,7 @@ const TROUBLES_KEY = "troubles";
 const GENDER_KEY = "gender";
 const FULL_NAME_KEY = "fullName";
 const USER_ID_KEY = "user_id";
+const AUTH_KEY = 'auth_status';
 const EMERGENCY_PHONE_NUMBER = "emergency_phone_number";
 const EMERGENCY_PHONE_NUMBER_KEY = "emergency_phone_number";
 const EMERGENCY_EMAIL_KEY = "emergency_email";
@@ -99,6 +102,10 @@ const REPORT_ADDED_SUCCESSFULLY = "Report added Successfully";
 const SAVE = "Save";
 const CANCEL = "Cancel";
 const CHECK_YOUR_MAIL_FOR_PASSWORD_RESET = "Check your mail for Password Reset";
+const MALE = "Male";
+const FEMALE = "Female";
+const authStatusKey = "auth_status";
+const DATE_OF_BIRTH = "Date of Birth";
 
 //menu const
 const HOME_MENU = "Home";

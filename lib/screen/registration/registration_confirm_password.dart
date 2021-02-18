@@ -32,8 +32,13 @@ class RegistrationConfirmPassword extends StatelessWidget {
                   onChanged: (value) {
                     registrationBloc?.confirmPasswordChanged(value);
                   },
-                  onFieldSubmitted: (value){
+                  onFieldSubmitted: (value) {
                     hideKeyboard(context);
+                  },
+                  validator: (value) {
+                    if (value.length < 3) {
+                      return 'Minimum 8 characters, one alphanumberic and one uppercase letter';
+                    }
                   },
                   decoration: InputDecoration(
                     suffixIcon: !snapshot.hasError &&
