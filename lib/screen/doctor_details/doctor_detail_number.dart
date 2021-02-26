@@ -26,6 +26,7 @@ class DoctorDetailNumber extends StatelessWidget {
                   keyboardType: TextInputType.phone,
                   textInputAction: TextInputAction.next,
                   textAlign: TextAlign.start,
+                  maxLength: 10,
                   //focusNode: fullNameFocusNode,
                   onChanged: (value) {
                     consultingDoctorDetailBloc.changeDoctorPhoneNumber(value);
@@ -36,14 +37,14 @@ class DoctorDetailNumber extends StatelessWidget {
                     }
                   },
                   decoration: InputDecoration(
-                    suffixIcon: !snapshot.hasError &&
-                            consultingDoctorDetailBloc.doctorPhoneNumberValue !=
-                                null
-                        ? Icon(
-                            Icons.check,
-                            color: Colors.green,
-                          )
-                        : null,
+                    // suffixIcon: !snapshot.hasError &&
+                    //         consultingDoctorDetailBloc.doctorPhoneNumberValue !=
+                    //             null
+                    //     ? Icon(
+                    //         Icons.check,
+                    //         color: Colors.green,
+                    //       )
+                    //     : null,
                     fillColor: Colors.white,
                     border: InputBorder.none,
                     hintText: 'Phone Number',

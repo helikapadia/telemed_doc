@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:telemed_doc/bloc/upload_documents_bloc/upload_documents_bloc.dart';
 import 'package:telemed_doc/screen/upload_detail_screen/upload_detail_design.dart';
 import 'package:telemed_doc/screen/upload_detail_screen/upload_report_description.dart';
+import 'package:telemed_doc/screen/upload_detail_screen/upload_report_pdf.dart';
 import 'package:telemed_doc/screen/upload_detail_screen/upload_report_submit.dart';
 import 'package:telemed_doc/screen/upload_detail_screen/upload_report_title.dart';
 import 'package:telemed_doc/util/constant.dart';
@@ -14,7 +15,7 @@ class UploadDetailScreen extends StatefulWidget {
 class _UploadDetailScreenState extends State<UploadDetailScreen> {
   UploadDocumentsBloc uploadDocumentsBloc = UploadDocumentsBloc();
   @override
-  void dispose(){
+  void dispose() {
     uploadDocumentsBloc?.dispose();
     super.dispose();
   }
@@ -35,7 +36,8 @@ class _UploadDetailScreenState extends State<UploadDetailScreen> {
                   height: 10,
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   child: Card(
                     elevation: 3,
                     child: Column(
@@ -51,7 +53,9 @@ class _UploadDetailScreenState extends State<UploadDetailScreen> {
                                 fontSize: 20),
                           ),
                         ),
-                        UploadReportTitle(uploadDocumentsBloc: uploadDocumentsBloc,),
+                        UploadReportTitle(
+                          uploadDocumentsBloc: uploadDocumentsBloc,
+                        ),
                         Padding(
                           padding: const EdgeInsets.only(right: 150, top: 10),
                           child: Text(
@@ -63,11 +67,18 @@ class _UploadDetailScreenState extends State<UploadDetailScreen> {
                                 fontSize: 20),
                           ),
                         ),
-                        UploadReportDescription(uploadDocumentsBloc: uploadDocumentsBloc),
+                        UploadReportDescription(
+                            uploadDocumentsBloc: uploadDocumentsBloc),
                         const SizedBox(
                           height: 20,
                         ),
-                        UploadReportSubmit(uploadDocumentsBloc: uploadDocumentsBloc),
+                        UploadReportPDF(
+                            uploadDocumentsBloc: uploadDocumentsBloc),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        UploadReportSubmit(
+                            uploadDocumentsBloc: uploadDocumentsBloc),
                         const SizedBox(
                           height: 40,
                         ),

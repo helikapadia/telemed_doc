@@ -30,6 +30,13 @@ class DailyMedicineNumber extends StatelessWidget {
                     dailyMedicineBloc.changeDailyMedicineNumber(value);
                   },
                   decoration: InputDecoration(
+                    suffixIcon: !snapshot.hasError &&
+                            dailyMedicineBloc.dailyMedicineNameValue != null
+                        ? Icon(
+                            Icons.check,
+                            color: Colors.green,
+                          )
+                        : null,
                     border: InputBorder.none,
                     fillColor: ALICE_BLUE,
                     hintText: 'Total Medicines',

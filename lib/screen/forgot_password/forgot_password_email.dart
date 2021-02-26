@@ -27,6 +27,13 @@ class ForgotPasswordEmail extends StatelessWidget {
                     forgotPasswordBloc.emailChanged(value);
                   },
                   decoration: InputDecoration(
+                    suffixIcon: !snapshot.hasError &&
+                            forgotPasswordBloc.emailValue != null
+                        ? Icon(
+                            Icons.check,
+                            color: Colors.green,
+                          )
+                        : null,
                     fillColor: Colors.white,
                     hintText: 'Email Address',
                     border: InputBorder.none,

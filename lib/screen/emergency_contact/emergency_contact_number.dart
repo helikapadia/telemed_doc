@@ -25,6 +25,7 @@ class EmergencyContactNumber extends StatelessWidget {
                   enableSuggestions: false,
                   keyboardType: TextInputType.phone,
                   textInputAction: TextInputAction.done,
+                  maxLength: 10,
                   textAlign: TextAlign.start,
                   onChanged: (value) {
                     emergencyBloc.phoneNumberChanged(value);
@@ -35,13 +36,13 @@ class EmergencyContactNumber extends StatelessWidget {
                     }
                   },
                   decoration: InputDecoration(
-                    suffixIcon: !snapshot.hasError &&
-                            emergencyBloc.phoneNumberValue != null
-                        ? Icon(
-                            Icons.check,
-                            color: Colors.green,
-                          )
-                        : null,
+                    // suffixIcon: !snapshot.hasError &&
+                    //         emergencyBloc.phoneNumberValue != null
+                    //     ? Icon(
+                    //         Icons.check,
+                    //         color: Colors.green,
+                    //       )
+                    //     : null,
                     fillColor: Colors.white,
                     hintText: '(71) 555-555',
                     border: InputBorder.none,

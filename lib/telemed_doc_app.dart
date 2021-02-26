@@ -21,17 +21,15 @@ import 'package:telemed_doc/screen/upload_detail_screen/upload_detail_screen.dar
 import 'package:telemed_doc/screen/user_details_profile_screen/user_details_profile_screen.dart';
 import 'package:telemed_doc/util/app_preference.dart';
 import 'package:telemed_doc/util/constant.dart';
+import 'package:telemed_doc/util/resolve_auth.dart';
 
 class TeleMedDocApp extends StatelessWidget {
-  final bool authValue;
-
-  const TeleMedDocApp({this.authValue});
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'TeleMed Doc',
       theme: ThemeData.light(),
       debugShowCheckedModeBanner: false,
-      initialRoute: authValue != null && authValue ? BIOMETRIC_AUTH : '/',
+      initialRoute: '/',
       onUnknownRoute: unknownRoutes,
       onGenerateRoute: routes,
     );
@@ -68,7 +66,7 @@ class TeleMedDocApp extends StatelessWidget {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(builder: (context) {
-          return LoginScreen();
+          return ResolveAuth();
         });
         break;
       case REGISTER_ROUTE:

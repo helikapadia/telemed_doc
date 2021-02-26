@@ -23,6 +23,7 @@ class UserDetailPhoneNumber extends StatelessWidget {
                   autofocus: true,
                   enableSuggestions: false,
                   keyboardType: TextInputType.number,
+                  maxLength: 10,
                   textInputAction: TextInputAction.next,
                   textAlign: TextAlign.start,
                   //focusNode: fullNameFocusNode,
@@ -35,6 +36,13 @@ class UserDetailPhoneNumber extends StatelessWidget {
                     }
                   },
                   decoration: InputDecoration(
+                    // suffixIcon: !snapshot.hasError &&
+                    //         userProfileDetailBloc.phoneNumberValue != null
+                    //     ? Icon(
+                    //         Icons.check,
+                    //         color: Colors.green,
+                    //       )
+                    //     : null,
                     fillColor: Colors.white,
                     border: InputBorder.none,
                     hintText: 'Phone Number',

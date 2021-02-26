@@ -5,39 +5,46 @@ import 'package:telemed_doc/util/constant.dart';
 class DailyMedicineName extends StatelessWidget {
   final DailyMedicineBloc dailyMedicineBloc;
 
-  const DailyMedicineName({Key key,@required this.dailyMedicineBloc}) : super(key: key);
+  const DailyMedicineName({Key key, @required this.dailyMedicineBloc})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<String>(
-      stream: dailyMedicineBloc.dailyMedicineName,
-      builder: (context, snapshot) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-          child: Card(
-            color: ALICE_BLUE,
-            elevation: 3,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 8),
-              child: TextFormField(
-                autocorrect: false,
-                autofocus: true,
-                enableSuggestions: false,
-                keyboardType: TextInputType.multiline,
-                textInputAction: TextInputAction.next,
-                textAlign: TextAlign.start,
-                onChanged: (value){
-                  dailyMedicineBloc.changeDailyMedicineName(value);
-                },
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  fillColor: ALICE_BLUE,
-                  hintText: 'Name of Medicine',
+        stream: dailyMedicineBloc.dailyMedicineName,
+        builder: (context, snapshot) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+            child: Card(
+              color: ALICE_BLUE,
+              elevation: 3,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: TextFormField(
+                  autocorrect: false,
+                  autofocus: true,
+                  enableSuggestions: false,
+                  keyboardType: TextInputType.multiline,
+                  textInputAction: TextInputAction.next,
+                  textAlign: TextAlign.start,
+                  onChanged: (value) {
+                    dailyMedicineBloc.changeDailyMedicineName(value);
+                  },
+                  decoration: InputDecoration(
+                    suffixIcon: !snapshot.hasError &&
+                            dailyMedicineBloc.dailyMedicineNameValue != null
+                        ? Icon(
+                            Icons.check,
+                            color: Colors.green,
+                          )
+                        : null,
+                    border: InputBorder.none,
+                    fillColor: ALICE_BLUE,
+                    hintText: 'Name of Medicine',
+                  ),
                 ),
               ),
             ),
-          ),
-        );
-      }
-    );
+          );
+        });
   }
 }

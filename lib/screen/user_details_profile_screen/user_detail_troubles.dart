@@ -29,6 +29,13 @@ class UserDetailTrouble extends StatelessWidget {
                     userProfileDetailBloc.changeTrouble(value);
                   },
                   decoration: InputDecoration(
+                    suffixIcon: !snapshot.hasError &&
+                            userProfileDetailBloc.troubleValue != null
+                        ? Icon(
+                            Icons.check,
+                            color: Colors.green,
+                          )
+                        : null,
                     fillColor: Colors.white,
                     border: InputBorder.none,
                     hintText: 'Family History',
