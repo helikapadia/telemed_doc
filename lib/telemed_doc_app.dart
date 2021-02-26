@@ -68,7 +68,7 @@ class TeleMedDocApp extends StatelessWidget {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(builder: (context) {
-          return HomeScreen();
+          return LoginScreen();
         });
         break;
       case REGISTER_ROUTE:

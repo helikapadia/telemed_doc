@@ -3,9 +3,6 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
 import 'package:telemed_doc/util/constant.dart';
 
 class ScanDocument extends StatefulWidget {
@@ -236,11 +233,11 @@ class _AddMoreImageState extends State<AddMoreImage> {
               width: 20,
             ),
             RaisedButton(
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return PDFMaker(image: imageFile.path);
-                }));
-              },
+              // onPressed: () {
+              //   Navigator.push(context, MaterialPageRoute(builder: (context) {
+              //     return PDFMaker(image: imageFile.path);
+              //   }));
+              // },
               child: Text(
                 'Make PDF',
                 style: TextStyle(color: Colors.white),
@@ -251,51 +248,5 @@ class _AddMoreImageState extends State<AddMoreImage> {
         )
       ],
     ));
-  }
-}
-
-class PDFMaker extends StatefulWidget {
-  final String image;
-
-  final String imageFile;
-
-  const PDFMaker({Key key, this.image, this.imageFile}) : super(key: key);
-  @override
-  _PDFMakerState createState() => _PDFMakerState();
-}
-
-class _PDFMakerState extends State<PDFMaker> {
-  var index;
-  final pdf = pw.Document();
-  // final String path = 'report.pdf';
-  File imageFile;
-
-  void initState() {
-    main();
-    super.initState();
-  }
-
-  Future main() async {
-    final _img = PdfImage.file(pdf.document,
-        bytes: File(widget.imageFile).readAsBytesSync());
-    pdf.addPage(pw.Page(
-        pageFormat: PdfPageFormat.a4,
-        build: (pw.Context context) {
-          return pw.Center(
-            // child: pw.Image(_img),
-          );
-        }));
-    final output = await getExternalStorageDirectory();
-    print("${output.path}/example.pdf");
-    final file = File("${output.path}/Document$index.pdf");
-    index = index + 1;
-    await file.writeAsBytes(await pdf.save());
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Text("Done"),
-    );
   }
 }
