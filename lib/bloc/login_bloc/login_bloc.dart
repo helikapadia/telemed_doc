@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:telemed_doc/bloc/login_bloc/login_validators.dart';
-import 'package:telemed_doc/bloc/login_bloc/user_provider.dart';
 import 'package:telemed_doc/util/app_helper.dart';
 import 'package:telemed_doc/util/app_preference.dart';
 import 'package:telemed_doc/util/constant.dart';
@@ -37,75 +36,76 @@ class LoginBloc with LoginValidators {
             .signInWithEmailAndPassword(
                 email: emailValue, password: passwordValue)
             .then((authResult) async {
-          if (authResult.user.emailVerified) {
+          if (authResult.user.isEmailVerified) {
             await AppPreference.setString(USER_ID_KEY, authResult.user.uid);
 
             //UserProvider.of(context).updatedUser(authResult.user.uid);
 
-            await FirebaseFirestore.instance
+            await Firestore.instance
                 .collection(USER_COLLECTION)
-                .doc(authResult.user.uid)
-                .update({
+                .document(authResult.user.uid)
+                .updateData({
               EMAIL_KEY: emailValue,
               USER_ID_KEY: authResult.user.uid,
               IS_ACTIVE: true,
               IS_EMAIL_VERIFIED: true
             });
-            await FirebaseFirestore.instance
+            await Firestore.instance
                 .collection(USER_COLLECTION)
-                .doc(authResult.user.uid)
+                .document(authResult.user.uid)
                 .get()
                 .then((DocumentSnapshot documentSnapshot) async {
               await AppPreference.setString(
-                  USER_EMAIL, documentSnapshot.data()['email']);
+                  USER_EMAIL, documentSnapshot.data['email']);
               await AppPreference.setString(
-                  USER_GENDER, documentSnapshot.data()['gender']);
+                  USER_GENDER, documentSnapshot.data['gender']);
               await AppPreference.setString(
-                  USER_FULL_NAME, documentSnapshot.data()['full_name']);
+                  USER_FULL_NAME, documentSnapshot.data['full_name']);
 
-              if(documentSnapshot.data().containsKey(CITY_KEY)){
+              if (documentSnapshot.data.containsKey(CITY_KEY)) {
                 await AppPreference.setString(
-                    CITY_KEY, documentSnapshot.data()['city']);
+                    CITY_KEY, documentSnapshot.data['city']);
               }
 
-              if(documentSnapshot.data().containsKey(EMERGENCY_EMAIL_KEY)){
-                await AppPreference.setString(
-                    EMERGENCY_EMAIL_KEY, documentSnapshot.data()['emergency_email']);
+              if (documentSnapshot.data.containsKey(EMERGENCY_EMAIL_KEY)) {
+                await AppPreference.setString(EMERGENCY_EMAIL_KEY,
+                    documentSnapshot.data['emergency_email']);
               }
 
-              if(documentSnapshot.data().containsKey(EMERGENCY_PHONE_NUMBER_KEY)){
-                await AppPreference.setString(
-                    EMERGENCY_PHONE_NUMBER_KEY, documentSnapshot.data()['emergency_phone_number']);
+              if (documentSnapshot.data
+                  .containsKey(EMERGENCY_PHONE_NUMBER_KEY)) {
+                await AppPreference.setString(EMERGENCY_PHONE_NUMBER_KEY,
+                    documentSnapshot.data['emergency_phone_number']);
               }
 
-              if(documentSnapshot.data().containsKey(AGE_KEY)){
+              if (documentSnapshot.data.containsKey(AGE_KEY)) {
                 await AppPreference.setString(
-                    AGE_KEY, documentSnapshot.data()['age']);
+                    AGE_KEY, documentSnapshot.data['age']);
               }
 
-              if(documentSnapshot.data().containsKey(DOB_KEY)){
+              if (documentSnapshot.data.containsKey(DOB_KEY)) {
                 await AppPreference.setString(
-                    DOB_KEY, documentSnapshot.data()['dob']);
+                    DOB_KEY, documentSnapshot.data['dob']);
               }
 
-              if(documentSnapshot.data().containsKey(ALLERGIES_KEY)){
+              if (documentSnapshot.data.containsKey(ALLERGIES_KEY)) {
                 await AppPreference.setString(
-                    ALLERGIES_KEY, documentSnapshot.data()['allergy']);
+                    ALLERGIES_KEY, documentSnapshot.data['allergy']);
               }
 
-              if(documentSnapshot.data().containsKey(TROUBLES_KEY)){
+              if (documentSnapshot.data.containsKey(TROUBLES_KEY)) {
                 await AppPreference.setString(
-                    TROUBLES_KEY, documentSnapshot.data()['trouble']);
+                    TROUBLES_KEY, documentSnapshot.data['trouble']);
               }
 
-              if(documentSnapshot.data().containsKey(PHONE_NUMBER_KEY)){
+              if (documentSnapshot.data.containsKey(PHONE_NUMBER_KEY)) {
                 await AppPreference.setString(
-                    PHONE_NUMBER_KEY, documentSnapshot.data()['phone_number']);
+                    PHONE_NUMBER_KEY, documentSnapshot.data['phone_number']);
               }
 
-              if(documentSnapshot.data().containsKey(BLOOD_GROUP_KEY)){
+              if (documentSnapshot.data.containsKey(BLOOD_GROUP_KEY)) {
                 await AppPreference.setString(
-                    BLOOD_GROUP_KEY, documentSnapshot.data()['blood_group']);
+                    BLOOD_GROUP_KEY, documentSnapshot.data['blood_group']);
               }
             });
             showProgress(false);
@@ -118,7 +118,7 @@ class LoginBloc with LoginValidators {
       } else {
         showProgress(false);
         showMessageDialog(EMAIL_NOT_VERIFIED, context);
-      };
+      }
     }).catchError((errors) {
       showProgress(false);
       showMessageDialog(errors.message, context);

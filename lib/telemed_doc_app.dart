@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:telemed_doc/screen/add_city/add_city_screen.dart';
 import 'package:telemed_doc/screen/daily_medicine/daily_medicine_screen.dart';
@@ -19,7 +18,6 @@ import 'package:telemed_doc/screen/settings_screen/biometric_auth.dart';
 import 'package:telemed_doc/screen/settings_screen/settings_screen.dart';
 import 'package:telemed_doc/screen/upload_detail_screen/upload_detail_screen.dart';
 import 'package:telemed_doc/screen/user_details_profile_screen/user_details_profile_screen.dart';
-import 'package:telemed_doc/util/app_preference.dart';
 import 'package:telemed_doc/util/constant.dart';
 import 'package:telemed_doc/util/resolve_auth.dart';
 
@@ -41,26 +39,26 @@ class TeleMedDocApp extends StatelessWidget {
     });
   }
 
-  MaterialPageRoute resolveAuth(context) {
-    final FirebaseAuth auth = FirebaseAuth.instance;
-    User user = auth.currentUser;
-    AppPreference.getStringF(USER_ID_KEY).then((userId) {
-      if (user.uid != null) {
-        if (user.uid != null && CITY_KEY == null) {
-          Navigator.pushNamedAndRemoveUntil(
-              context, ADD_CITY, (route) => false);
-        } else {
-          Navigator.pushNamedAndRemoveUntil(
-              context, HOME_SCREEN, (route) => false);
-        }
-      } else {
-        Navigator.pushNamedAndRemoveUntil(
-            context, LOGIN_ROUTE, (route) => false);
-      }
-    }).catchError((errors) {
-      Navigator.pushNamedAndRemoveUntil(context, LOGIN_ROUTE, (route) => false);
-    });
-  }
+  // MaterialPageRoute resolveAuth(context) {
+  //   final FirebaseAuth auth = FirebaseAuth.instance;
+  //   User user = auth.currentUser;
+  //   AppPreference.getStringF(USER_ID_KEY).then((userId) {
+  //     if (user.uid != null) {
+  //       if (user.uid != null && CITY_KEY == null) {
+  //         Navigator.pushNamedAndRemoveUntil(
+  //             context, ADD_CITY, (route) => false);
+  //       } else {
+  //         Navigator.pushNamedAndRemoveUntil(
+  //             context, HOME_SCREEN, (route) => false);
+  //       }
+  //     } else {
+  //       Navigator.pushNamedAndRemoveUntil(
+  //           context, LOGIN_ROUTE, (route) => false);
+  //     }
+  //   }).catchError((errors) {
+  //     Navigator.pushNamedAndRemoveUntil(context, LOGIN_ROUTE, (route) => false);
+  //   });
+  // }
 
   Route routes(RouteSettings settings) {
     switch (settings.name) {

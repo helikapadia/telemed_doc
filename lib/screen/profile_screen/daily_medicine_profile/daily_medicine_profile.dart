@@ -19,8 +19,21 @@ class _DailyMedicineProfileScreenState
   TextEditingController _medicineDosageController = TextEditingController();
 
   GlobalKey<FormState> _formKey = GlobalKey();
+  var userId;
+  void initState() {
+    super.initState();
+    input();
+  }
 
-  var userIdVal = FirebaseAuth.instance.currentUser.uid;
+  Future<void> input() async {
+    FirebaseUser userIdVal = await FirebaseAuth.instance.currentUser();
+    setState(() {
+      userId = userIdVal.uid;
+    });
+    return userId;
+  }
+
+  // var userIdVal = FirebaseAuth.instance.currentUser();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,9 +53,9 @@ class _DailyMedicineProfileScreenState
       ),
       backgroundColor: ALICE_BLUE,
       body: StreamBuilder<DocumentSnapshot>(
-        stream: FirebaseFirestore.instance
+        stream: Firestore.instance
             .collection(USER_COLLECTION)
-            .doc(userIdVal)
+            .document(userId)
             .snapshots(),
         builder: (context, snapshot) {
           print(snapshot.data);
@@ -450,10 +463,10 @@ class _DailyMedicineProfileScreenState
                   _status = true;
                 });
                 if (_formKey.currentState.validate()) {
-                  await FirebaseFirestore.instance
+                  await Firestore.instance
                       .collection(USER_COLLECTION)
-                      .doc(userIdVal)
-                      .update({
+                      .document(userId)
+                      .updateData({
                     "medicine_number": _medicineNumberController.text,
                     "medicine_name": _medicineNameController.text,
                     "medicine_type": _medicineTypeController.text,

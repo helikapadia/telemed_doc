@@ -44,17 +44,18 @@ class ConsultingDoctorDetailBloc with ConsultingDoctorDetailValidators {
       doctorAddress,
       (fn, ph, sp, ad) => true);
 
-  void addDoctorDetails(BuildContext context){
+  void addDoctorDetails(BuildContext context) async {
     hideKeyboard(context);
     showProgress(true);
     AppHelper.checkInternetConnection().then((isAvailable) async {
       if (isAvailable) {
-        var userIdVal = FirebaseAuth.instance.currentUser.uid;
-        DocumentReference documentReference =
-        FirebaseFirestore.instance.collection(USER_COLLECTION).doc(userIdVal);
+        FirebaseUser userIdVal = await FirebaseAuth.instance.currentUser();
+        DocumentReference documentReference = Firestore.instance
+            .collection(USER_COLLECTION)
+            .document(userIdVal.uid);
         await documentReference.get().then((doc) async {
           if (doc.exists) {
-            await documentReference.update({
+            await documentReference.updateData({
               DOCTOR_NAME_KEY: doctorFullNameValue,
               DOCTOR_PHONE_NUMBER_KEY: doctorPhoneNumberValue,
               DOCTOR_SPECIALIZATION_KEY: doctorSpecializationValue,
@@ -73,19 +74,19 @@ class ConsultingDoctorDetailBloc with ConsultingDoctorDetailValidators {
                   DOCTOR_SPECIALIZATION_KEY, doctorSpecializationValue);
               await AppPreference.setString(
                   DOCTOR_ADDRESS_KEY, doctorAddressValue);
-              showDialogAndNavigate(
-                  DATA_ADDED_SUCCESSFULLY, context,
+              showDialogAndNavigate(DATA_ADDED_SUCCESSFULLY, context,
                   DAILY_MEDICINE_SCREEN_ROUTE);
             }).catchError((errors) {
               showProgress(false);
               showMessageDialog(errors.msg, context);
             });
           } else {
-            await documentReference.set({
+            await documentReference.setData({
               DOCTOR_NAME_KEY: doctorFullNameValue,
               DOCTOR_PHONE_NUMBER_KEY: doctorPhoneNumberValue,
               DOCTOR_SPECIALIZATION_KEY: doctorSpecializationValue,
-              DOCTOR_ADDRESS_KEY: doctorAddressValue,}).then((value) async {
+              DOCTOR_ADDRESS_KEY: doctorAddressValue,
+            }).then((value) async {
               showProgress(false);
               changeDoctorFullName(doctorFullNameValue);
               changeDoctorPhoneNumber(doctorPhoneNumberValue);
@@ -112,7 +113,7 @@ class ConsultingDoctorDetailBloc with ConsultingDoctorDetailValidators {
     });
   }
 
-  void dispose(){
+  void dispose() {
     _doctorFullName?.close();
     _doctorAddress?.close();
     _doctorPhoneNumber?.close();

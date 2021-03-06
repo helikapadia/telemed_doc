@@ -40,17 +40,18 @@ class DailyMedicineBloc {
       dailyMedicineDosage,
       (n, num, type, d) => true);
 
-  void addDailyMedicine(BuildContext context){
+  void addDailyMedicine(BuildContext context) async {
     hideKeyboard(context);
     showProgress(true);
     AppHelper.checkInternetConnection().then((isAvailable) async {
       if (isAvailable) {
-        var userIdVal = FirebaseAuth.instance.currentUser.uid;
-        DocumentReference documentReference =
-        FirebaseFirestore.instance.collection(USER_COLLECTION).doc(userIdVal);
+        FirebaseUser userIdVal = await FirebaseAuth.instance.currentUser();
+        DocumentReference documentReference = Firestore.instance
+            .collection(USER_COLLECTION)
+            .document(userIdVal.uid);
         await documentReference.get().then((doc) async {
           if (doc.exists) {
-            await documentReference.update({
+            await documentReference.updateData({
               DAILY_MEDICINE_NAME_KEY: dailyMedicineNameValue,
               DAILY_MEDICINE_TYPE_KEY: dailyMedicineTypeValue,
               DAILY_MEDICINE_NUMBER_KEY: dailyMedicineNumberValue,
@@ -70,18 +71,18 @@ class DailyMedicineBloc {
               await AppPreference.setString(
                   DAILY_MEDICINE_DOSAGE_KEY, dailyMedicineDosageValue);
               showDialogAndNavigate(
-                  DATA_ADDED_SUCCESSFULLY, context,
-                  HOME_SCREEN);
+                  DATA_ADDED_SUCCESSFULLY, context, HOME_SCREEN);
             }).catchError((errors) {
               showProgress(false);
               showMessageDialog(errors.msg, context);
             });
           } else {
-            await documentReference.set({
+            await documentReference.setData({
               DAILY_MEDICINE_NAME_KEY: dailyMedicineNameValue,
               DAILY_MEDICINE_TYPE_KEY: dailyMedicineTypeValue,
               DAILY_MEDICINE_NUMBER_KEY: dailyMedicineNumberValue,
-              DAILY_MEDICINE_DOSAGE_KEY: dailyMedicineDosageValue,}).then((value) async {
+              DAILY_MEDICINE_DOSAGE_KEY: dailyMedicineDosageValue,
+            }).then((value) async {
               showProgress(false);
               changeDailyMedicineName(dailyMedicineNameValue);
               changeDailyMedicineNumber(dailyMedicineNumberValue);
@@ -108,7 +109,7 @@ class DailyMedicineBloc {
     });
   }
 
-  void dispose(){
+  void dispose() {
     _dailyMedicineName?.close();
     _dailyMedicineDosage?.close();
     _showProgress?.close();

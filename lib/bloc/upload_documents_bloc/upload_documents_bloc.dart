@@ -2,19 +2,17 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:path/path.dart' as path;
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:telemed_doc/util/app_helper.dart';
-import 'package:telemed_doc/util/app_preference.dart';
 import 'package:telemed_doc/util/constant.dart';
 import 'package:uuid/uuid.dart';
 
-class UploadDocumentsBloc{
+class UploadDocumentsBloc {
   final _showProgress = BehaviorSubject<bool>.seeded(false);
   final _isKeyboardOpen = BehaviorSubject<bool>.seeded(false);
   final _reportName = BehaviorSubject<String>();
@@ -53,37 +51,42 @@ class UploadDocumentsBloc{
     reportIdChanged(DateTime.now().toUtc().millisecondsSinceEpoch.toString());
   }
 
-  Stream<bool> get submitReportDetail => Rx.combineLatest2(reportName, reportDescription, (rn, rd) => true);
+  Stream<bool> get submitReportDetail =>
+      Rx.combineLatest2(reportName, reportDescription, (rn, rd) => true);
 
   Future selectPdf(BuildContext context) async {
     FilePickerResult pdf = await FilePicker.platform.pickFiles(
-        type: FileType.custom, allowedExtensions: ['pdf'])
-        .catchError((errors) {
+        type: FileType.custom, allowedExtensions: ['pdf']).catchError((errors) {
       showMessageDialog(PDF_ERROR, context);
     });
-    if(pdf!= null){
+    if (pdf != null) {
       File file = File(pdf.files.single.path);
       return file;
-    }else{
+    } else {
       showProgress(false);
       showMessageDialog(PDF_ERROR, context);
     }
   }
 
-  void uploadFile(BuildContext context){
-    AppHelper.checkInternetConnection().then((isAvailable) async{
-      if(isAvailable){
+  void uploadFile(BuildContext context) {
+    AppHelper.checkInternetConnection().then((isAvailable) async {
+      if (isAvailable) {
         File file = await selectPdf(context);
-        if(file!= null) {
-          var userIdVal = FirebaseAuth.instance.currentUser.uid;
+        if (file != null) {
+          FirebaseUser userIdVal = await FirebaseAuth.instance.currentUser();
           final reportId = Uuid().v4();
           //StorageReference _storageReference = await FirebaseStorage.instance.ref().child("$REPORT_PDF_URL/${path.basename(fileChosenValue.path)}");final StorageUploadTask
-          Reference _storageReference = FirebaseStorage.instance.ref().child(
-              "REPORT_PDF/$userIdVal/BLOOD_REPORT/$reportId/BLOOD_REPORT.pdf");
+          StorageReference _storageReference = FirebaseStorage.instance
+              .ref()
+              .child(
+                  "REPORT_PDF/$userIdVal/BLOOD_REPORT/$reportId/BLOOD_REPORT.pdf");
           await _storageReference.putFile(file);
           String link = await _storageReference.getDownloadURL();
-          print("123     "+link);
-          await FirebaseFirestore.instance.collection(USER_COLLECTION+"/$userIdVal/reports").doc(reportId).set({
+          print("123     " + link);
+          await Firestore.instance
+              .collection(USER_COLLECTION + "/$userIdVal/reports")
+              .document(reportId)
+              .setData({
             "blood_report_id": reportId,
             "blood_report_link": link,
             REPORT_NAME: reportNameValue,
@@ -94,16 +97,17 @@ class UploadDocumentsBloc{
           // AppPreference.setString("blood_report_link", link);
           // AppPreference.setString(REPORT_NAME, reportNameValue);
           // AppPreference.setString(REPORT_DESCRIPTION, reportDescriptionValue);
-          showDialogAndNavigate(REPORT_ADDED_SUCCESSFULLY, context, HOME_SCREEN);
+          showDialogAndNavigate(
+              REPORT_ADDED_SUCCESSFULLY, context, HOME_SCREEN);
         }
-      }
-      else {
+      } else {
         showProgress(false);
         showMessageDialog(PLEASE_CHECK_INTERNET_CONNECTION, context);
       }
     });
   }
-  void dispose(){
+
+  void dispose() {
     _showProgress?.close();
     _fileUrl?.close();
     _isKeyboardOpen?.close();

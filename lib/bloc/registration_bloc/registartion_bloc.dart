@@ -57,44 +57,42 @@ class RegistrationBloc with RegistrationValidators {
           password: passwordValue,
         )
             .then((authResult) async {
-              print("234");
+          print("234");
           await authResult.user.sendEmailVerification();
           await AppPreference.setString(USER_EMAIL, emailValue);
           await AppPreference.setString(USER_FULL_NAME, fullNameValue);
           await AppPreference.setString(USER_GENDER, genderValue);
 
-          await FirebaseFirestore.instance
+          await Firestore.instance
               .collection(USER_COLLECTION)
-              .doc(authResult.user.uid)
-              .set({
+              .document(authResult.user.uid)
+              .setData({
             EMAIL_KEY: emailValue,
             GENDER_KEY: genderValue,
             FULL_NAME_KEY: fullNameValue,
             USER_ID_KEY: authResult.user.uid,
             IS_ACTIVE: false,
             IS_EMAIL_VERIFIED: false,
-          }).then((isCompleted){
+          }).then((isCompleted) {
             showProgress(false);
-            showDialogAndNavigate(PLEASE_CHECK_YOUR_MAIL_FOR_VERIFICATION, context, LOGIN_ROUTE);
+            showDialogAndNavigate(
+                PLEASE_CHECK_YOUR_MAIL_FOR_VERIFICATION, context, LOGIN_ROUTE);
           }).catchError((error) {
             showProgress(false);
-            showMessageDialog(
-                error.message, context);
+            showMessageDialog(error.message, context);
           });
         }).catchError((errors) {
           showProgress(false);
-          showMessageDialog(
-              errors.message, context);
+          showMessageDialog(errors.message, context);
         });
-      }
-      else {
+      } else {
         showProgress(false);
         showMessageDialog(PLEASE_CHECK_INTERNET_CONNECTION, context);
       }
     });
   }
 
-  void dispose(){
+  void dispose() {
     _emailController.close();
     _genderController.close();
     _fullNameController.close();

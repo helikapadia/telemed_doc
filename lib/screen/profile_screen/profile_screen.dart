@@ -23,8 +23,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController _troubleController = TextEditingController();
 
   GlobalKey<FormState> _formKey = GlobalKey();
+  var userId;
 
-  var userIdVal = FirebaseAuth.instance.currentUser.uid;
+  void initState() {
+    super.initState();
+    input();
+  }
+
+  Future<void> input() async {
+    FirebaseUser userIdVal = await FirebaseAuth.instance.currentUser();
+    setState(() {
+      userId = userIdVal.uid;
+    });
+    return userId;
+  }
+
+  //var userIdVal = FirebaseAuth.instance.currentUser();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,9 +58,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       backgroundColor: ALICE_BLUE,
       body: StreamBuilder<DocumentSnapshot>(
-        stream: FirebaseFirestore.instance
+        stream: Firestore.instance
             .collection(USER_COLLECTION)
-            .doc(userIdVal)
+            .document(userId)
             .snapshots(),
         builder: (context, snapshot) {
           print(snapshot.data);
@@ -835,10 +849,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   _status = true;
                 });
                 if (_formKey.currentState.validate()) {
-                  await FirebaseFirestore.instance
+                  await Firestore.instance
                       .collection(USER_COLLECTION)
-                      .doc(userIdVal)
-                      .update({
+                      .document(userId)
+                      .updateData({
                     "fullName": _fullNameController.text,
                     "email": _emailController.text,
                     "age": _ageController.text,

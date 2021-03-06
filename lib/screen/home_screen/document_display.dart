@@ -12,21 +12,27 @@ class DocumentDisplay extends StatefulWidget {
 class _DocumentDisplayState extends State<DocumentDisplay> {
   bool _isLoading = true;
   PDFDocument document;
-
+  var userId;
   @override
   void initState() {
     super.initState();
+    input();
   }
 
-  var userIdVal = FirebaseAuth.instance.currentUser.uid;
+  Future<void> input() async {
+    FirebaseUser userIdVal = await FirebaseAuth.instance.currentUser();
+    setState(() {
+      userId = userIdVal.uid;
+    });
+    return userId;
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance
-          .collection("user/$userIdVal/reports")
-          .snapshots(),
+      stream: Firestore.instance.collection("user/$userId/reports").snapshots(),
       builder: (BuildContext context, snapshot) {
-        print(userIdVal);
+        print(userId);
         if (snapshot.hasData) {
           return Scaffold(
             appBar: AppBar(
@@ -51,21 +57,22 @@ class _DocumentDisplayState extends State<DocumentDisplay> {
                       print(snapshot.data);
                       return ListTile(
                         title: Text(
-                          snapshot.data.docs[index]["report_name"],
+                          snapshot.data.documents[index]["report_name"],
                         ),
                         onTap: () async {
-                          document = await PDFDocument.fromURL(
-                              snapshot.data.docs[index]["blood_report_link"]);
+                          document = await PDFDocument.fromURL(snapshot
+                              .data.documents[index]["blood_report_link"]);
                           print("1");
                           setState(() {
                             _isLoading = false;
                           });
-                          print(snapshot.data.docs[index]["blood_report_link"]);
+                          print(snapshot.data.documents[index]
+                              ["blood_report_link"]);
                         },
                       );
                     },
                     separatorBuilder: (context, index) => Divider(),
-                    itemCount: snapshot.data.size),
+                    itemCount: snapshot.data.documents.length),
                 Center(
                   child: _isLoading
                       ? Center(

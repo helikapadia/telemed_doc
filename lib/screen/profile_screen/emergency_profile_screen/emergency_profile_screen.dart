@@ -15,8 +15,21 @@ class _EmergencyProfileScreenState extends State<EmergencyProfileScreen> {
   TextEditingController _phoneNumberController = TextEditingController();
 
   GlobalKey<FormState> _formKey = GlobalKey();
+  var userId;
+  void initState() {
+    super.initState();
+    input();
+  }
 
-  var userIdVal = FirebaseAuth.instance.currentUser.uid;
+  Future<void> input() async {
+    FirebaseUser userIdVal = await FirebaseAuth.instance.currentUser();
+    setState(() {
+      userId = userIdVal.uid;
+    });
+    return userId;
+  }
+
+  //var userIdVal = FirebaseAuth.instance.currentUser();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,9 +49,9 @@ class _EmergencyProfileScreenState extends State<EmergencyProfileScreen> {
       ),
       backgroundColor: ALICE_BLUE,
       body: StreamBuilder<DocumentSnapshot>(
-        stream: FirebaseFirestore.instance
+        stream: Firestore.instance
             .collection(USER_COLLECTION)
-            .doc(userIdVal)
+            .document(userId)
             .snapshots(),
         builder: (context, snapshot) {
           print(snapshot.data);
@@ -133,7 +146,7 @@ class _EmergencyProfileScreenState extends State<EmergencyProfileScreen> {
                               children: [
                                 ListTile(
                                   leading: Text(
-                                    "Emergency Phone Number:",
+                                    "Emergency Contact:",
                                     style: TextStyle(
                                         fontFamily: 'Poppins', fontSize: 15),
                                   ),
@@ -246,7 +259,7 @@ class _EmergencyProfileScreenState extends State<EmergencyProfileScreen> {
                               children: [
                                 ListTile(
                                   leading: Text(
-                                    "Emergency Phone Number:",
+                                    "Emergency Contact:",
                                     style: TextStyle(
                                         fontFamily: 'Poppins', fontSize: 15),
                                   ),
@@ -305,10 +318,10 @@ class _EmergencyProfileScreenState extends State<EmergencyProfileScreen> {
                   _status = true;
                 });
                 if (_formKey.currentState.validate()) {
-                  await FirebaseFirestore.instance
+                  await Firestore.instance
                       .collection(USER_COLLECTION)
-                      .doc(userIdVal)
-                      .update({
+                      .document(userId)
+                      .updateData({
                     "emergency_email": _emailController.text,
                     "emergency_phone_number": _phoneNumberController.text,
                   });
