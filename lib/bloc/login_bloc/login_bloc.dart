@@ -38,9 +38,6 @@ class LoginBloc with LoginValidators {
             .then((authResult) async {
           if (authResult.user.isEmailVerified) {
             await AppPreference.setString(USER_ID_KEY, authResult.user.uid);
-
-            //UserProvider.of(context).updatedUser(authResult.user.uid);
-
             await Firestore.instance
                 .collection(USER_COLLECTION)
                 .document(authResult.user.uid)
