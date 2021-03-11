@@ -24,6 +24,7 @@ const EMERGENCY_PROFILE_SCREEN = "/emergencyProfileScreen";
 const SCAN_DOC_ROUTE = "/scanDocRoute";
 const ADD_MORE_IMAGE = "/addMoreImage";
 const BIOMETRIC_AUTH = "/biometricAuth";
+const PDF_VIEW = "/viewPDF";
 //text
 const EMAIL_ERROR = "Enter valid Email";
 const GENDER = "Gender";

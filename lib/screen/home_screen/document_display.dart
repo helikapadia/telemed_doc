@@ -21,9 +21,7 @@ class _DocumentDisplayState extends State<DocumentDisplay> {
 
   Future<void> input() async {
     FirebaseUser userIdVal = await FirebaseAuth.instance.currentUser();
-    setState(() {
-      userId = userIdVal.uid;
-    });
+    userId = userIdVal.uid;
     return userId;
   }
 
@@ -84,9 +82,10 @@ class _DocumentDisplayState extends State<DocumentDisplay> {
             ),
           );
         } else {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
+          return Container();
+          // return Center(
+          //   child: CircularProgressIndicator(),
+          // );
         }
       },
     );

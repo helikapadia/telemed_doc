@@ -13,11 +13,13 @@ import 'package:telemed_doc/screen/profile_screen/emergency_profile_screen/emerg
 import 'package:telemed_doc/screen/profile_screen/profile_detail.dart';
 import 'package:telemed_doc/screen/profile_screen/profile_screen.dart';
 import 'package:telemed_doc/screen/registration/registration_screen.dart';
+import 'package:telemed_doc/screen/scan_doc/scan_doc.dart';
 import 'package:telemed_doc/screen/scan_doc/scan_document.dart';
 import 'package:telemed_doc/screen/settings_screen/biometric_auth.dart';
 import 'package:telemed_doc/screen/settings_screen/settings_screen.dart';
 import 'package:telemed_doc/screen/upload_detail_screen/upload_detail_screen.dart';
 import 'package:telemed_doc/screen/user_details_profile_screen/user_details_profile_screen.dart';
+import 'package:telemed_doc/screen/view_pdf/view_pdf.dart';
 import 'package:telemed_doc/util/constant.dart';
 import 'package:telemed_doc/util/resolve_auth.dart';
 
@@ -149,7 +151,7 @@ class TeleMedDocApp extends StatelessWidget {
         break;
       case SCAN_DOC_ROUTE:
         return MaterialPageRoute(builder: (context) {
-          return ScanDocument();
+          return ScanDocScreen();
         });
         break;
       case ADD_MORE_IMAGE:
@@ -165,6 +167,11 @@ class TeleMedDocApp extends StatelessWidget {
       case SETTINGS_SCREEN:
         return MaterialPageRoute(builder: (context) {
           return SettingsScreen();
+        });
+        break;
+      case PDF_VIEW:
+        return MaterialPageRoute(builder: (context) {
+          return ViewPDF();
         });
         break;
       default:

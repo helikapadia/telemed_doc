@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:telemed_doc/bloc/upload_documents_bloc/upload_documents_bloc.dart';
+import 'package:telemed_doc/screen/upload_detail_screen/attached_report.dart';
 import 'package:telemed_doc/screen/upload_detail_screen/upload_detail_design.dart';
 import 'package:telemed_doc/screen/upload_detail_screen/upload_report_description.dart';
 import 'package:telemed_doc/screen/upload_detail_screen/upload_report_pdf.dart';
+import 'package:telemed_doc/screen/upload_detail_screen/upload_report_progress_bar.dart';
 import 'package:telemed_doc/screen/upload_detail_screen/upload_report_submit.dart';
 import 'package:telemed_doc/screen/upload_detail_screen/upload_report_title.dart';
 import 'package:telemed_doc/util/constant.dart';
@@ -74,6 +76,9 @@ class _UploadDetailScreenState extends State<UploadDetailScreen> {
                         ),
                         UploadReportPDF(
                             uploadDocumentsBloc: uploadDocumentsBloc),
+                        AttachedReport(
+                          uploadDocumentsBloc: uploadDocumentsBloc,
+                        ),
                         const SizedBox(
                           height: 20,
                         ),
@@ -85,6 +90,9 @@ class _UploadDetailScreenState extends State<UploadDetailScreen> {
                       ],
                     ),
                   ),
+                ),
+                UploadReportProgressBar(
+                  uploadDocumentsBloc: uploadDocumentsBloc,
                 )
               ],
             ),
