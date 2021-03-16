@@ -19,7 +19,7 @@ import 'package:telemed_doc/screen/settings_screen/biometric_auth.dart';
 import 'package:telemed_doc/screen/settings_screen/settings_screen.dart';
 import 'package:telemed_doc/screen/upload_detail_screen/upload_detail_screen.dart';
 import 'package:telemed_doc/screen/user_details_profile_screen/user_details_profile_screen.dart';
-import 'package:telemed_doc/screen/view_pdf/view_pdf.dart';
+// import 'package:telemed_doc/screen/view_pdf/view_pdf.dart';
 import 'package:telemed_doc/util/constant.dart';
 import 'package:telemed_doc/util/resolve_auth.dart';
 
@@ -169,11 +169,11 @@ class TeleMedDocApp extends StatelessWidget {
           return SettingsScreen();
         });
         break;
-      case PDF_VIEW:
-        return MaterialPageRoute(builder: (context) {
-          return ViewPDF();
-        });
-        break;
+      // case PDF_VIEW:
+      //   return MaterialPageRoute(builder: (context) {
+      //     return ViewPDF();
+      //   });
+      //   break;
       default:
         return MaterialPageRoute(builder: (context) {
           return LoginScreen();
