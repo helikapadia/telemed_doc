@@ -45,13 +45,12 @@ class DailyMedicineBloc {
     showProgress(true);
     AppHelper.checkInternetConnection().then((isAvailable) async {
       if (isAvailable) {
-        FirebaseUser userIdVal = await FirebaseAuth.instance.currentUser();
-        DocumentReference documentReference = Firestore.instance
-            .collection(USER_COLLECTION)
-            .document(userIdVal.uid);
+        var userIdVal = FirebaseAuth.instance.currentUser.uid;
+        DocumentReference documentReference =
+            Firestore.instance.collection(USER_COLLECTION).doc(userIdVal);
         await documentReference.get().then((doc) async {
           if (doc.exists) {
-            await documentReference.updateData({
+            await documentReference.update({
               DAILY_MEDICINE_NAME_KEY: dailyMedicineNameValue,
               DAILY_MEDICINE_TYPE_KEY: dailyMedicineTypeValue,
               DAILY_MEDICINE_NUMBER_KEY: dailyMedicineNumberValue,
@@ -77,7 +76,7 @@ class DailyMedicineBloc {
               showMessageDialog(errors.msg, context);
             });
           } else {
-            await documentReference.setData({
+            await documentReference.set({
               DAILY_MEDICINE_NAME_KEY: dailyMedicineNameValue,
               DAILY_MEDICINE_TYPE_KEY: dailyMedicineTypeValue,
               DAILY_MEDICINE_NUMBER_KEY: dailyMedicineNumberValue,

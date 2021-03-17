@@ -51,15 +51,15 @@ class AddCityBloc {
     showProgress(true);
     AppHelper.checkInternetConnection().then((isAvailable) async {
       if (isAvailable) {
-        FirebaseUser userIdVal = await FirebaseAuth.instance.currentUser();
-        print(userIdVal.uid);
-        DocumentReference documentReference = Firestore.instance
+        var userIdVal = FirebaseAuth.instance.currentUser.uid;
+        print(userIdVal);
+        DocumentReference documentReference = FirebaseFirestore.instance
             .collection(USER_COLLECTION)
-            .document(userIdVal.uid);
+            .doc(userIdVal);
         await documentReference.get().then((doc) async {
           if (doc.exists) {
             await documentReference
-                .updateData({CITY_KEY: addCityValue}).then((value) async {
+                .update({CITY_KEY: addCityValue}).then((value) async {
               showProgress(false);
               changeAddCity(modalCityValue);
               changeModalCity("");
@@ -72,7 +72,7 @@ class AddCityBloc {
             });
           } else {
             await documentReference
-                .setData({CITY_KEY: modalCityValue}).then((value) async {
+                .set({CITY_KEY: modalCityValue}).then((value) async {
               showProgress(false);
               changeAddCity(modalCityValue);
               changeModalCity("");

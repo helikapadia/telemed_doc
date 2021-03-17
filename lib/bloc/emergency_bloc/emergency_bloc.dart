@@ -56,13 +56,13 @@ class EmergencyBloc with EmergencyValidators {
     showProgress(true);
     AppHelper.checkInternetConnection().then((isAvailable) async {
       if (isAvailable) {
-        FirebaseUser userIdVal = await FirebaseAuth.instance.currentUser();
-        DocumentReference documentReference = Firestore.instance
+        var userIdVal = FirebaseAuth.instance.currentUser.uid;
+        DocumentReference documentReference = FirebaseFirestore.instance
             .collection(USER_COLLECTION)
-            .document(userIdVal.uid);
+            .doc(userIdVal);
         await documentReference.get().then((doc) async {
           if (doc.exists) {
-            await documentReference.updateData({
+            await documentReference.update({
               EMERGENCY_EMAIL_KEY: emailValue,
               EMERGENCY_PHONE_NUMBER_KEY: phoneNumberValue
             }).then((value) async {
@@ -79,7 +79,7 @@ class EmergencyBloc with EmergencyValidators {
               showMessageDialog(errors.msg, context);
             });
           } else {
-            await documentReference.setData({
+            await documentReference.set({
               EMERGENCY_EMAIL_KEY: emailValue,
               EMERGENCY_PHONE_NUMBER_KEY: phoneNumberValue
             }).then((value) async {

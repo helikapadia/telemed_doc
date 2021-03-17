@@ -140,11 +140,11 @@ class ProfileBloc with ProfileValidators {
     showProgress(true);
     AppHelper.checkInternetConnection().then((isAvailable) async {
       if (isAvailable) {
-        FirebaseUser userIdVal = await FirebaseAuth.instance.currentUser();
-        Firestore.instance
+        var userIdVal = FirebaseAuth.instance.currentUser.uid;
+        FirebaseFirestore.instance
             .collection(USER_COLLECTION)
-            .document(userIdVal.uid)
-            .updateData({EMAIL_KEY: modalEmailValue}).then((value) {
+            .doc(userIdVal)
+            .update({EMAIL_KEY: modalEmailValue}).then((value) {
           showProgress(false);
           emailChanged(modalEmailValue);
           modalEmailChanged("");
@@ -164,11 +164,11 @@ class ProfileBloc with ProfileValidators {
     showProgress(true);
     AppHelper.checkInternetConnection().then((isAvailable) async {
       if (isAvailable) {
-        FirebaseUser userIdVal = await FirebaseAuth.instance.currentUser();
-        Firestore.instance
+        var userIdVal = FirebaseAuth.instance.currentUser.uid;
+        FirebaseFirestore.instance
             .collection(USER_COLLECTION)
-            .document(userIdVal.uid)
-            .updateData({FULL_NAME_KEY: modalFullNameValue}).then((value) {
+            .doc(userIdVal)
+            .update({FULL_NAME_KEY: modalFullNameValue}).then((value) {
           showProgress(false);
           fullNameChanged(modalFullNameValue);
           modalFullNameChanged("");
@@ -188,12 +188,11 @@ class ProfileBloc with ProfileValidators {
     showProgress(true);
     AppHelper.checkInternetConnection().then((isAvailable) async {
       if (isAvailable) {
-        FirebaseUser userIdVal = await FirebaseAuth.instance.currentUser();
-        Firestore.instance
+        var userIdVal = FirebaseAuth.instance.currentUser.uid;
+        FirebaseFirestore.instance
             .collection(USER_COLLECTION)
-            .document(userIdVal.uid)
-            .updateData({PHONE_NUMBER_KEY: modalPhoneNumberValue}).then(
-                (value) {
+            .doc(userIdVal)
+            .update({PHONE_NUMBER_KEY: modalPhoneNumberValue}).then((value) {
           showProgress(false);
           phoneNumberChanged(modalPhoneNumberValue);
           modalPhoneNumberChanged("");
@@ -213,11 +212,11 @@ class ProfileBloc with ProfileValidators {
     showProgress(true);
     AppHelper.checkInternetConnection().then((isAvailable) async {
       if (isAvailable) {
-        FirebaseUser userIdVal = await FirebaseAuth.instance.currentUser();
-        Firestore.instance
+        var userIdVal = FirebaseAuth.instance.currentUser.uid;
+        FirebaseFirestore.instance
             .collection(USER_COLLECTION)
-            .document(userIdVal.uid)
-            .updateData({AGE_KEY: modalAgeValue}).then((value) {
+            .doc(userIdVal)
+            .update({AGE_KEY: modalAgeValue}).then((value) {
           showProgress(false);
           changeAge(modalAgeValue);
           modalAgeChanged("");
@@ -237,11 +236,11 @@ class ProfileBloc with ProfileValidators {
     showProgress(true);
     AppHelper.checkInternetConnection().then((isAvailable) async {
       if (isAvailable) {
-        FirebaseUser userIdVal = await FirebaseAuth.instance.currentUser();
-        Firestore.instance
+        var userIdVal = FirebaseAuth.instance.currentUser.uid;
+        FirebaseFirestore.instance
             .collection(USER_COLLECTION)
-            .document(userIdVal.uid)
-            .updateData({ALLERGIES_KEY: modalAllergyValue}).then((value) {
+            .doc(userIdVal)
+            .update({ALLERGIES_KEY: modalAllergyValue}).then((value) {
           showProgress(false);
           changeAllergy(modalAllergyValue);
           modalAllergyChanged("");
@@ -261,11 +260,11 @@ class ProfileBloc with ProfileValidators {
     showProgress(true);
     AppHelper.checkInternetConnection().then((isAvailable) async {
       if (isAvailable) {
-        FirebaseUser userIdVal = await FirebaseAuth.instance.currentUser();
-        Firestore.instance
+        var userIdVal = FirebaseAuth.instance.currentUser.uid;
+        FirebaseFirestore.instance
             .collection(USER_COLLECTION)
-            .document(userIdVal.uid)
-            .updateData({TROUBLES_KEY: modalTroubleValue}).then((value) {
+            .doc(userIdVal)
+            .update({TROUBLES_KEY: modalTroubleValue}).then((value) {
           showProgress(false);
           changeTrouble(modalTroubleValue);
           modalTroubleChanged("");

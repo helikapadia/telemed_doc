@@ -74,13 +74,13 @@ class UserProfileDetailBloc with UserProfileDetailValidators {
     showProgress(true);
     AppHelper.checkInternetConnection().then((isAvailable) async {
       if (isAvailable) {
-        FirebaseUser userIdVal = await FirebaseAuth.instance.currentUser();
-        DocumentReference documentReference = Firestore.instance
+        var userIdVal = FirebaseAuth.instance.currentUser.uid;
+        DocumentReference documentReference = FirebaseFirestore.instance
             .collection(USER_COLLECTION)
-            .document(userIdVal.uid);
+            .doc(userIdVal);
         await documentReference.get().then((doc) async {
           if (doc.exists) {
-            await documentReference.updateData({
+            await documentReference.update({
               // FULL_NAME_KEY: fullNameValue,
               AGE_KEY: ageValue,
               // GENDER_KEY: genderValue,
@@ -117,7 +117,7 @@ class UserProfileDetailBloc with UserProfileDetailValidators {
               showMessageDialog(errors.msg, context);
             });
           } else {
-            await documentReference.setData({
+            await documentReference.set({
               FULL_NAME_KEY: fullNameValue,
               AGE_KEY: ageValue,
               GENDER_KEY: genderValue,

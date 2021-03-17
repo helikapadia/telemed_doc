@@ -22,10 +22,10 @@ class SettingsBloc {
   Future<void> setData() async {
     AppHelper.checkInternetConnection().then((isAvailable) async {
       if (isAvailable) {
-        FirebaseUser userIdVal = await FirebaseAuth.instance.currentUser();
-        DocumentReference documentReference = Firestore.instance
+        var userIdVal = FirebaseAuth.instance.currentUser.uid;
+        DocumentReference documentReference = FirebaseFirestore.instance
             .collection(USER_COLLECTION)
-            .document(userIdVal.uid);
+            .doc(userIdVal);
         await documentReference.get().then((doc) async {
           if (doc.exists) {
             bool authValue = await AppPreference.getBoolF(authStatusKey);
@@ -33,7 +33,7 @@ class SettingsBloc {
               changeAuthOn(authValue);
             }
             await documentReference
-                .updateData({authStatusKey: authOnValue}).then((value) async {
+                .update({authStatusKey: authOnValue}).then((value) async {
               changeAuthOn(authValue);
               await AppPreference.setBool(authStatusKey, authOnValue);
             });
@@ -46,14 +46,13 @@ class SettingsBloc {
   Future<void> updateAuthOn(BuildContext context, bool bioAuthValue) async {
     changeProgress(true);
     try {
-      var userIdVal = FirebaseAuth.instance.currentUser();
-      DocumentReference documentReference = Firestore.instance
-          .collection(USER_COLLECTION)
-          .document(userIdVal.toString());
+      var userIdVal = FirebaseAuth.instance.currentUser.uid;
+      DocumentReference documentReference =
+          FirebaseFirestore.instance.collection(USER_COLLECTION).doc(userIdVal);
       await documentReference.get().then((doc) async {
         if (doc.exists) {
           await documentReference
-              .updateData({authStatusKey: authOnValue}).then((value) async {
+              .update({authStatusKey: authOnValue}).then((value) async {
             bool authValue = await AppPreference.getBoolF(authStatusKey);
             if (authValue != null) {
               changeAuthOn(authValue);

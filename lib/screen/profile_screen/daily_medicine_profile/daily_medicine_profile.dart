@@ -22,18 +22,9 @@ class _DailyMedicineProfileScreenState
   var userId;
   void initState() {
     super.initState();
-    input();
   }
 
-  Future<void> input() async {
-    FirebaseUser userIdVal = await FirebaseAuth.instance.currentUser();
-    setState(() {
-      userId = userIdVal.uid;
-    });
-    return userId;
-  }
-
-  // var userIdVal = FirebaseAuth.instance.currentUser();
+  var userIdVal = FirebaseAuth.instance.currentUser.uid;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,9 +44,9 @@ class _DailyMedicineProfileScreenState
       ),
       backgroundColor: ALICE_BLUE,
       body: StreamBuilder<DocumentSnapshot>(
-        stream: Firestore.instance
+        stream: FirebaseFirestore.instance
             .collection(USER_COLLECTION)
-            .document(userId)
+            .doc(userIdVal)
             .snapshots(),
         builder: (context, snapshot) {
           print(snapshot.data);
@@ -463,10 +454,10 @@ class _DailyMedicineProfileScreenState
                   _status = true;
                 });
                 if (_formKey.currentState.validate()) {
-                  await Firestore.instance
+                  await FirebaseFirestore.instance
                       .collection(USER_COLLECTION)
-                      .document(userId)
-                      .updateData({
+                      .doc(userIdVal)
+                      .update({
                     "medicine_number": _medicineNumberController.text,
                     "medicine_name": _medicineNameController.text,
                     "medicine_type": _medicineTypeController.text,

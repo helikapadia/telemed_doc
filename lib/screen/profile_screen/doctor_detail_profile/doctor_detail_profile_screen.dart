@@ -18,22 +18,12 @@ class _DoctorDetailProfileScreenState extends State<DoctorDetailProfileScreen> {
   TextEditingController _specializationController = TextEditingController();
 
   GlobalKey<FormState> _formKey = GlobalKey();
-  var userId;
 
   void initState() {
     super.initState();
-    input();
   }
 
-  Future<void> input() async {
-    FirebaseUser userIdVal = await FirebaseAuth.instance.currentUser();
-    setState(() {
-      userId = userIdVal.uid;
-    });
-    return userId;
-  }
-
-  // var userIdVal = FirebaseAuth.instance.currentUser();
+  var userIdVal = FirebaseAuth.instance.currentUser.uid;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,9 +43,9 @@ class _DoctorDetailProfileScreenState extends State<DoctorDetailProfileScreen> {
       ),
       backgroundColor: ALICE_BLUE,
       body: StreamBuilder<DocumentSnapshot>(
-        stream: Firestore.instance
+        stream: FirebaseFirestore.instance
             .collection(USER_COLLECTION)
-            .document(userId)
+            .doc(userIdVal)
             .snapshots(),
         builder: (context, snapshot) {
           print(snapshot.data);
@@ -464,10 +454,10 @@ class _DoctorDetailProfileScreenState extends State<DoctorDetailProfileScreen> {
                   _status = true;
                 });
                 if (_formKey.currentState.validate()) {
-                  await Firestore.instance
+                  await FirebaseFirestore.instance
                       .collection(USER_COLLECTION)
-                      .document(userId)
-                      .updateData({
+                      .doc(userIdVal)
+                      .update({
                     "doctor_name": _fullNameController.text,
                     "doctor_phone_number": _phoneNumberController.text,
                     "doctor_address": _addressController.text,

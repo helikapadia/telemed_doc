@@ -23,22 +23,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController _troubleController = TextEditingController();
 
   GlobalKey<FormState> _formKey = GlobalKey();
-  var userId;
 
   void initState() {
     super.initState();
-    input();
   }
 
-  Future<void> input() async {
-    FirebaseUser userIdVal = await FirebaseAuth.instance.currentUser();
-    setState(() {
-      userId = userIdVal.uid;
-    });
-    return userId;
-  }
-
-  //var userIdVal = FirebaseAuth.instance.currentUser();
+  var userIdVal = FirebaseAuth.instance.currentUser.uid;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,9 +48,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       backgroundColor: ALICE_BLUE,
       body: StreamBuilder<DocumentSnapshot>(
-        stream: Firestore.instance
+        stream: FirebaseFirestore.instance
             .collection(USER_COLLECTION)
-            .document(userId)
+            .doc(userIdVal)
             .snapshots(),
         builder: (context, snapshot) {
           print(snapshot.data);
@@ -849,10 +839,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   _status = true;
                 });
                 if (_formKey.currentState.validate()) {
-                  await Firestore.instance
+                  await FirebaseFirestore.instance
                       .collection(USER_COLLECTION)
-                      .document(userId)
-                      .updateData({
+                      .doc(userIdVal)
+                      .update({
                     "fullName": _fullNameController.text,
                     "email": _emailController.text,
                     "age": _ageController.text,
@@ -895,6 +885,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _getEditIcon() {
     return GestureDetector(
+      onTap: () {
+        setState(() {
+          _status = false;
+        });
+      },
       child: new CircleAvatar(
         backgroundColor: Colors.red,
         radius: 14,

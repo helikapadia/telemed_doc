@@ -12,11 +12,12 @@ class _ResolveAuthState extends State<ResolveAuth> {
   @override
   void initState() {
     super.initState();
-    Future<FirebaseUser> user = FirebaseAuth.instance.currentUser();
+    User user = FirebaseAuth.instance.currentUser;
     debugPrint(user.toString());
-    user.then((user) {
+
+    if (user != null) {
       AppPreference.getStringF(USER_ID_KEY).then((userId) async {
-        if (user == null) {
+        if (user.uid == null) {
           Navigator.pushNamedAndRemoveUntil(
               context, LOGIN_ROUTE, (route) => false);
         }
@@ -35,9 +36,7 @@ class _ResolveAuthState extends State<ResolveAuth> {
         Navigator.pushNamedAndRemoveUntil(
             context, LOGIN_ROUTE, (route) => false);
       });
-    }).catchError((error) {
-      Navigator.pushNamedAndRemoveUntil(context, LOGIN_ROUTE, (route) => false);
-    });
+    }
   }
 
   @override
@@ -49,7 +48,6 @@ class _ResolveAuthState extends State<ResolveAuth> {
     );
   }
 }
-
 //if (userIdVal != null) {
 //       AppPreference.getStringF(userIdVal).then((value) async {
 //         if (CITY_KEY != null) {
