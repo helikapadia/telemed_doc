@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:telemed_doc/bloc/scan_bloc/scan_bloc.dart';
+import 'package:telemed_doc/bloc/manual_analysis_bloc/manual_analysis_bloc.dart';
 import 'package:telemed_doc/util/constant.dart';
 
-class ScannedDocumentName extends StatelessWidget {
-  final ScanBloc scanBloc;
+class BloodSugarBeforeMeal extends StatelessWidget {
+  final ManualAnalysisBloc manualAnalysisBloc;
 
-  const ScannedDocumentName({Key key, this.scanBloc}) : super(key: key);
+  const BloodSugarBeforeMeal({Key key, this.manualAnalysisBloc})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<String>(
-        stream: scanBloc.reportName,
+        stream: manualAnalysisBloc.bsBefore,
         builder: (context, snapshot) {
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
@@ -22,16 +23,16 @@ class ScannedDocumentName extends StatelessWidget {
                   autocorrect: false,
                   autofocus: true,
                   enableSuggestions: false,
-                  keyboardType: TextInputType.text,
-                  textInputAction: TextInputAction.next,
+                  keyboardType: TextInputType.number,
+                  textInputAction: TextInputAction.done,
                   textAlign: TextAlign.start,
                   onChanged: (value) {
-                    scanBloc.reportNameChanged(value);
+                    manualAnalysisBloc.changeBsBefore(value);
                   },
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     fillColor: ALICE_BLUE,
-                    hintText: 'Name of Report',
+                    hintText: 'Before Meal Sugar (mg/dL)',
                   ),
                 ),
               ),

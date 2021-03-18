@@ -92,6 +92,9 @@
 //   }
 // }
 import 'package:flutter/material.dart';
+import 'package:telemed_doc/bloc/scan_bloc/scan_bloc.dart';
+import 'package:telemed_doc/screen/scan_doc/add_image.dart';
+import 'package:telemed_doc/screen/scan_doc/scan_doc_submit_button.dart';
 import 'package:telemed_doc/screen/scan_doc/scanned_document_description.dart';
 import 'package:telemed_doc/screen/scan_doc/scanned_document_folder_selection.dart';
 import 'package:telemed_doc/screen/scan_doc/scanned_document_name.dart';
@@ -103,6 +106,7 @@ class ScanDocScreen extends StatefulWidget {
 }
 
 class _ScanDocScreenState extends State<ScanDocScreen> {
+  ScanBloc scanBloc = ScanBloc();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -127,67 +131,97 @@ class _ScanDocScreenState extends State<ScanDocScreen> {
           child: Stack(
             children: [
               SingleChildScrollView(
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  child: Card(
-                    elevation: 3,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 10,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 10),
+                      child: Card(
+                        elevation: 3,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(right: 60, top: 10),
+                              child: Text(
+                                'Name of Document',
+                                style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.bold,
+                                    color: FONT_BLUE,
+                                    fontSize: 20),
+                              ),
+                            ),
+                            ScannedDocumentName(scanBloc: scanBloc),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(right: 10, top: 10),
+                              child: Text(
+                                'Description of Document',
+                                style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.bold,
+                                    color: FONT_BLUE,
+                                    fontSize: 20),
+                              ),
+                            ),
+                            ScannedDocumentDescription(scanBloc: scanBloc),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(right: 85, top: 10),
+                              child: Text(
+                                'Select the Folder',
+                                style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.bold,
+                                    color: FONT_BLUE,
+                                    fontSize: 20),
+                              ),
+                            ),
+                            ScannedDocumentFolderSelection(scanBloc: scanBloc),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(right: 85, top: 10),
+                              child: Text(
+                                'Add Attachment',
+                                style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.bold,
+                                    color: FONT_BLUE,
+                                    fontSize: 20),
+                              ),
+                            ),
+                            AddImage(scanBloc: scanBloc),
+                            const SizedBox(
+                              height: 20,
+                            )
+                            // Padding(
+                            //   padding: const EdgeInsets.symmetric(
+                            //       horizontal: 8.0, vertical: 10),
+                            //   child: IconButton(
+                            //       icon: Icon(
+                            //     Icons.add,
+                            //     color: Colors.grey,
+                            //     size: 10,
+                            //   )),
+                            // ),
+                          ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 60, top: 10),
-                          child: Text(
-                            'Name of Document',
-                            style: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.bold,
-                                color: FONT_BLUE,
-                                fontSize: 20),
-                          ),
-                        ),
-                        ScannedDocumentName(),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 10, top: 10),
-                          child: Text(
-                            'Description of Document',
-                            style: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.bold,
-                                color: FONT_BLUE,
-                                fontSize: 20),
-                          ),
-                        ),
-                        ScannedDocumentDescription(),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 85, top: 10),
-                          child: Text(
-                            'Select the Folder',
-                            style: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.bold,
-                                color: FONT_BLUE,
-                                fontSize: 20),
-                          ),
-                        ),
-                        ScannedDocumentFolderSelection(),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0, vertical: 10),
-                          child: IconButton(
-                              icon: Icon(
-                            Icons.add,
-                            color: Colors.grey,
-                            size: 10,
-                          )),
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    ScanDocSubmit(scanBloc: scanBloc),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                  ],
                 ),
               )
             ],

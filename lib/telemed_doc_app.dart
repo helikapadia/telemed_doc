@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:telemed_doc/screen/add_city/add_city_screen.dart';
+import 'package:telemed_doc/screen/analysis/manual_analysis/manual_analysis_screen.dart';
 import 'package:telemed_doc/screen/daily_medicine/daily_medicine_screen.dart';
 import 'package:telemed_doc/screen/doctor_details/doctor_details_screen.dart';
 import 'package:telemed_doc/screen/emergency_contact/emergency_contact_screen.dart';
@@ -13,8 +14,7 @@ import 'package:telemed_doc/screen/profile_screen/emergency_profile_screen/emerg
 import 'package:telemed_doc/screen/profile_screen/profile_detail.dart';
 import 'package:telemed_doc/screen/profile_screen/profile_screen.dart';
 import 'package:telemed_doc/screen/registration/registration_screen.dart';
-import 'package:telemed_doc/screen/scan_doc/scan_doc.dart';
-import 'package:telemed_doc/screen/scan_doc/scan_document.dart';
+import 'package:telemed_doc/screen/scan_doc/scan_doc_screen.dart';
 import 'package:telemed_doc/screen/settings_screen/biometric_auth.dart';
 import 'package:telemed_doc/screen/settings_screen/settings_screen.dart';
 import 'package:telemed_doc/screen/upload_detail_screen/upload_detail_screen.dart';
@@ -154,11 +154,11 @@ class TeleMedDocApp extends StatelessWidget {
           return ScanDocScreen();
         });
         break;
-      case ADD_MORE_IMAGE:
-        return MaterialPageRoute(builder: (context) {
-          return AddMoreImage();
-        });
-        break;
+      // case ADD_MORE_IMAGE:
+      //   return MaterialPageRoute(builder: (context) {
+      //     return AddMoreImage();
+      //   });
+      //   break;
       case BIOMETRIC_AUTH:
         return MaterialPageRoute(builder: (context) {
           return BiometricAuth();
@@ -167,6 +167,11 @@ class TeleMedDocApp extends StatelessWidget {
       case SETTINGS_SCREEN:
         return MaterialPageRoute(builder: (context) {
           return SettingsScreen();
+        });
+        break;
+      case ANALYSIS_SCREEN:
+        return MaterialPageRoute(builder: (context) {
+          return ManualAnalysisScreen();
         });
         break;
       // case PDF_VIEW:

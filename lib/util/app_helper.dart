@@ -1,10 +1,11 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 class AppHelper {
-  static void popupDialog(BuildContext context, String alertTitle,
-      String alertBody) {
+  static void popupDialog(
+      BuildContext context, String alertTitle, String alertBody) {
     showDialog(
         context: context,
         builder: (context) {
@@ -34,85 +35,86 @@ class AppHelper {
     return false;
   }
 }
-  void showMessageDialog(String msg, BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return CupertinoAlertDialog(
-            title: Text(
-              msg,
-              style: TextStyle(fontFamily: 'Poppins', fontSize: 14),
-            ),
-            actions: <Widget>[
-              CupertinoDialogAction(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                textStyle: TextStyle(
-                  fontFamily: 'Poppins',
-                  fontSize: 14,
-                ),
-                child: Text('OK'),
-              )
-            ],
-          );
-        });
-  }
 
-  void showDialogAndNavigate(
-      String msg, BuildContext context, String routeName) {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return CupertinoAlertDialog(
-            title: Text(
-              msg,
-              style: TextStyle(fontSize: 14, fontFamily: "Poppins"),
-            ),
-            actions: <Widget>[
-              CupertinoDialogAction(
-                onPressed: (){
+void showMessageDialog(String msg, BuildContext context) {
+  showDialog(
+      context: context,
+      builder: (context) {
+        return CupertinoAlertDialog(
+          title: Text(
+            msg,
+            style: TextStyle(fontFamily: 'Poppins', fontSize: 14),
+          ),
+          actions: <Widget>[
+            CupertinoDialogAction(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              textStyle: TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: 14,
+              ),
+              child: Text('OK'),
+            )
+          ],
+        );
+      });
+}
+
+void showDialogAndNavigate(String msg, BuildContext context, String routeName) {
+  showDialog(
+      context: context,
+      builder: (context) {
+        return CupertinoAlertDialog(
+          title: Text(
+            msg,
+            style: TextStyle(fontSize: 14, fontFamily: "Poppins"),
+          ),
+          actions: <Widget>[
+            CupertinoDialogAction(
+                onPressed: () {
                   Navigator.pushNamed(context, routeName);
                 },
-                  textStyle: TextStyle(fontSize: 14, fontFamily: "Poppins"),
-                  child: Text("OK"))
-            ],
-          );
-        });
-  }
+                textStyle: TextStyle(fontSize: 14, fontFamily: "Poppins"),
+                child: Text("OK"))
+          ],
+        );
+      });
+}
 
-  void hideKeyboard(BuildContext context) {
-    FocusScope.of(context).requestFocus(FocusNode());
-  }
+void hideKeyboard(BuildContext context) {
+  FocusScope.of(context).requestFocus(FocusNode());
+}
 
-  void showDialogAndRemoveRoutes(
-      String msg, BuildContext context, String routeName) {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return CupertinoAlertDialog(
-            title: Text(
-              msg,
-              style: TextStyle(fontSize: 14, fontFamily: 'Poppins'),
-            ),
-            actions: <Widget>[
-              CupertinoDialogAction(
-                onPressed: () {
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, routeName, (route) => false);
-                },
-                textStyle: TextStyle(fontFamily: 'Poppins', fontSize: 14),
-                child: Text("OK"),
-              )
-            ],
-          );
-        });
-  }
+void showDialogAndRemoveRoutes(
+    String msg, BuildContext context, String routeName) {
+  showDialog(
+      context: context,
+      builder: (context) {
+        return CupertinoAlertDialog(
+          title: Text(
+            msg,
+            style: TextStyle(fontSize: 14, fontFamily: 'Poppins'),
+          ),
+          actions: <Widget>[
+            CupertinoDialogAction(
+              onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, routeName, (route) => false);
+              },
+              textStyle: TextStyle(fontFamily: 'Poppins', fontSize: 14),
+              child: Text("OK"),
+            )
+          ],
+        );
+      });
+}
+
 class ReportModel {
   const ReportModel(
       {@required this.reportUrl,
-        @required this.reportDate,
-        @required this.reportName});
+      @required this.reportDate,
+      @required this.reportName});
 
   final List<String> reportUrl;
   final String reportDate;
@@ -132,4 +134,35 @@ class PDFHelperModel {
 
   final String title;
   final String pdfUrl;
+}
+
+class PreviewPhotoOnlineModel {
+  const PreviewPhotoOnlineModel(
+      {@required this.imageList, @required this.index});
+  final List<String> imageList;
+  final int index;
+}
+
+class PickedImageModel {
+  const PickedImageModel(
+      {@required this.isFromLib,
+      @required this.img,
+      @required this.identifier,
+      @required this.epochTimeStamp});
+  final bool isFromLib;
+  final dynamic img;
+  final String identifier;
+  final String epochTimeStamp;
+}
+
+class PickedImageNewMessageModel {
+  const PickedImageNewMessageModel(
+      {@required this.isFromLib,
+      @required this.img,
+      @required this.identifier,
+      @required this.epochTimeStamp});
+  final bool isFromLib;
+  final dynamic img;
+  final String identifier;
+  final String epochTimeStamp;
 }

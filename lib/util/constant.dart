@@ -17,6 +17,7 @@ const UPLOAD_DETAIL_SCREEN = "/uploadDetailScreen";
 const DOCUMENT_DISPLAY_SCREEN = "/documentDisplayScreen";
 const PROFILE_SCREEN = "/profileScreen";
 const SETTINGS_SCREEN = "/settingScreen";
+const ANALYSIS_SCREEN = "/analysisScreen";
 const PROFILE_DETAIL = "/profileDetail";
 const DOCTOR_DETAIL_PROFILE_SCREEN = "/doctorDetailProfileScreen";
 const DAILY_MEDICINE_PROFILE_SCREEN = "/dailyMedicineProfileScreen";
@@ -99,6 +100,7 @@ const REPORT_PDF_URL = "report_pdf_url";
 const REPORT_DATE = "report_date";
 const REPORT_NAME = "report_name";
 const REPORT_DESCRIPTION = "report_description";
+const REPORT_FOLDER_NAME = "report_folder_name";
 const REPORT_ADDED_SUCCESSFULLY = "Report added Successfully";
 const SAVE = "Save";
 const CANCEL = "Cancel";
@@ -107,11 +109,17 @@ const MALE = "Male";
 const FEMALE = "Female";
 const authStatusKey = "auth_status";
 const DATE_OF_BIRTH = "Date of Birth";
+const BLOOD_PRESSURE_SYS_KEY = "blood_pressure_sys";
+const BLOOD_PRESSURE_DIA_KEY = "blood_pressure_dia";
+const BLOOD_SUGAR_FAST_KEY = "blood_sugar_fast";
+const BLOOD_SUGAR_BEFORE_KEY = "blood_sugar_before";
+const ANALYSIS_DATE = "analysis_date";
 
 //menu const
 const HOME_MENU = "Home";
 const PROFILE_MENU = "Profile";
 const DOCUMENTS_MENU = "Documents";
+const ANALYSIS_MENU = "Analysis";
 const SETTINGS_MENU = "Settings";
 const LOGOUT = "Logout";
 

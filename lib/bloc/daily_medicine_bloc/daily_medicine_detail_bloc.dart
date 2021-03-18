@@ -47,7 +47,7 @@ class DailyMedicineBloc {
       if (isAvailable) {
         var userIdVal = FirebaseAuth.instance.currentUser.uid;
         DocumentReference documentReference =
-            Firestore.instance.collection(USER_COLLECTION).doc(userIdVal);
+            FirebaseFirestore.instance.collection(USER_COLLECTION).doc(userIdVal);
         await documentReference.get().then((doc) async {
           if (doc.exists) {
             await documentReference.update({

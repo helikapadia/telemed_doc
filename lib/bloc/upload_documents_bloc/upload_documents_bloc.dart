@@ -114,6 +114,7 @@ class UploadDocumentsBloc {
               "blood_report_link": link,
               REPORT_NAME: reportNameValue,
               REPORT_DESCRIPTION: reportDescriptionValue,
+              REPORT_DATE: reportDateValue
             });
             showProgress(false);
             // AppPreference.setString("blood_report_id", reportId);

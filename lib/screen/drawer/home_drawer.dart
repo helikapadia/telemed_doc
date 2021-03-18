@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:telemed_doc/screen/home_screen/document_display.dart';
 import 'package:telemed_doc/util/app_helper.dart';
 import 'package:telemed_doc/util/app_preference.dart';
 import 'package:telemed_doc/util/constant.dart';
@@ -16,6 +15,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
     MenuList(title: HOME_MENU, icon: Icons.home),
     MenuList(title: PROFILE_MENU, icon: Icons.person),
     MenuList(title: DOCUMENTS_MENU, icon: Icons.file_copy),
+    MenuList(title: ANALYSIS_MENU, icon: Icons.analytics_outlined),
     MenuList(title: SETTINGS_MENU, icon: Icons.settings),
     MenuList(title: LOGOUT, icon: Icons.logout),
   ];
@@ -30,33 +30,38 @@ class _HomeDrawerState extends State<HomeDrawer> {
             child: Column(
               children: [
                 ListView.separated(
-                  shrinkWrap: true,
+                    shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return InkWell(
-                        onTap: (){
+                        onTap: () {
                           openScreen(menuList[index].title);
                         },
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Icon(menuList[index].icon),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Text(menuList[index].title, style: TextStyle(fontFamily: 'Poppins'),),
-                          ],
-                        ),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 10),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Icon(menuList[index].icon),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                menuList[index].title,
+                                style: TextStyle(fontFamily: 'Poppins'),
+                              ),
+                            ],
+                          ),
                         ),
                       );
                     },
-                    separatorBuilder: (context, index)  =>
-                      const Divider(color: Colors.grey,),
+                    separatorBuilder: (context, index) => const Divider(
+                          color: Colors.grey,
+                        ),
                     itemCount: menuList.length)
               ],
             ),
@@ -65,27 +70,32 @@ class _HomeDrawerState extends State<HomeDrawer> {
       ),
     );
   }
-  void openScreen(String name){
-    if(name==PROFILE_MENU){
-      Navigator.pushNamedAndRemoveUntil(context, PROFILE_SCREEN, (route) => false);
-    }
-    else if(name == SETTINGS_MENU){
-      Navigator.pushNamedAndRemoveUntil(context, SETTINGS_SCREEN, (route) => false);
-    }
-    else if(name == DOCUMENTS_MENU){
-      Navigator.pushNamedAndRemoveUntil(context, DOCUMENT_DISPLAY_SCREEN, (route) => false);
-    }
-    else if(name == HOME_MENU){
+
+  void openScreen(String name) {
+    if (name == PROFILE_MENU) {
+      Navigator.pushNamedAndRemoveUntil(
+          context, PROFILE_SCREEN, (route) => false);
+    } else if (name == SETTINGS_MENU) {
+      Navigator.pushNamedAndRemoveUntil(
+          context, SETTINGS_SCREEN, (route) => false);
+    } else if (name == ANALYSIS_MENU) {
+      Navigator.pushNamedAndRemoveUntil(
+          context, ANALYSIS_SCREEN, (route) => false);
+    } else if (name == DOCUMENTS_MENU) {
+      Navigator.pushNamedAndRemoveUntil(
+          context, DOCUMENT_DISPLAY_SCREEN, (route) => false);
+    } else if (name == HOME_MENU) {
       Navigator.pushNamedAndRemoveUntil(context, HOME_SCREEN, (route) => false);
-    }
-    else if(name == LOGOUT){
-      FirebaseAuth.instance.signOut().then((value) async{
+    } else if (name == LOGOUT) {
+      FirebaseAuth.instance.signOut().then((value) async {
         await AppPreference.remove(USER_EMAIL);
         await AppPreference.remove(USER_FULL_NAME);
         await AppPreference.remove(USER_GENDER);
 
-        await Navigator.pushNamedAndRemoveUntil(context, LOGIN_ROUTE, (route) => false, arguments: false);
-      }).catchError((errors){
+        await Navigator.pushNamedAndRemoveUntil(
+            context, LOGIN_ROUTE, (route) => false,
+            arguments: false);
+      }).catchError((errors) {
         showMessageDialog(errors.message, context);
       });
     }

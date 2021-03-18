@@ -105,6 +105,11 @@ class LoginBloc with LoginValidators {
                 await AppPreference.setString(
                     BLOOD_GROUP_KEY, documentSnapshot.data()['blood_group']);
               }
+
+              if (documentSnapshot.data().containsKey(authStatusKey)) {
+                await AppPreference.setString(
+                    authStatusKey, documentSnapshot.data()['auth_status']);
+              }
             });
             showProgress(false);
             showDialogAndNavigate(LOGIN_SUCCESSFUL, context, ADD_CITY);

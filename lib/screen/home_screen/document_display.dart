@@ -24,7 +24,7 @@ class _DocumentDisplayState extends State<DocumentDisplay> {
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance
-          .collection("user/$userIdVal/reports")
+          .collection("user/$userIdVal/reports/")
           .snapshots(),
       builder: (BuildContext context, snapshot) {
         if (snapshot.hasData) {
