@@ -7,6 +7,7 @@ import 'package:telemed_doc/screen/user_details_profile_screen/user_detail_age.d
 import 'package:telemed_doc/screen/user_details_profile_screen/user_detail_allergies.dart';
 import 'package:telemed_doc/screen/user_details_profile_screen/user_detail_blood_group.dart';
 import 'package:telemed_doc/screen/user_details_profile_screen/user_detail_dob.dart';
+import 'package:telemed_doc/screen/user_details_profile_screen/user_detail_family_history.dart';
 import 'package:telemed_doc/screen/user_details_profile_screen/user_detail_phone_number.dart';
 import 'package:telemed_doc/screen/user_details_profile_screen/user_detail_submit_btn.dart';
 import 'package:telemed_doc/screen/user_details_profile_screen/user_detail_troubles.dart';
@@ -90,6 +91,8 @@ class _UserDetailsProfileScreenState extends State<UserDetailsProfileScreen> {
                   UserDetailTrouble(
                     userProfileDetailBloc: userProfileDetailBloc,
                   ),
+                  UserDetailFamilyHistory(
+                      userProfileDetailBloc: userProfileDetailBloc),
                   const SizedBox(
                     height: 10,
                   ),

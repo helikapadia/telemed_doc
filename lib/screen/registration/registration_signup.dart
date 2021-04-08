@@ -21,7 +21,7 @@ class RegistrationSignUp extends StatelessWidget {
           } else {
             isEnabled = false;
           }
-          return FlatButton(
+          return TextButton(
               onPressed: isEnabled
                   ? () {
                       registrationBloc.registerUser(context);

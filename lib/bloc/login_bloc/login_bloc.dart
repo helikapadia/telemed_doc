@@ -38,7 +38,7 @@ class LoginBloc with LoginValidators {
             .then((authResult) async {
           if (authResult.user.emailVerified) {
             await AppPreference.setString(USER_ID_KEY, authResult.user.uid);
-            await FirebaseFirestore.instance
+            FirebaseFirestore.instance
                 .collection(USER_COLLECTION)
                 .doc(authResult.user.uid)
                 .update({
@@ -47,7 +47,7 @@ class LoginBloc with LoginValidators {
               IS_ACTIVE: true,
               IS_EMAIL_VERIFIED: true
             });
-            await FirebaseFirestore.instance
+            FirebaseFirestore.instance
                 .collection(USER_COLLECTION)
                 .doc(authResult.user.uid)
                 .get()
@@ -94,6 +94,11 @@ class LoginBloc with LoginValidators {
               if (documentSnapshot.data().containsKey(TROUBLES_KEY)) {
                 await AppPreference.setString(
                     TROUBLES_KEY, documentSnapshot.data()['trouble']);
+              }
+
+              if (documentSnapshot.data().containsKey(FAMILY_HISTORY_KEY)) {
+                await AppPreference.setString(
+                    TROUBLES_KEY, documentSnapshot.data()['family_history']);
               }
 
               if (documentSnapshot.data().containsKey(PHONE_NUMBER_KEY)) {

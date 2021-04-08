@@ -37,7 +37,7 @@ class _DoctorDetailProfileScreenState extends State<DoctorDetailProfileScreen> {
               ),
               onPressed: () {
                 Navigator.pushNamedAndRemoveUntil(
-                    context, PROFILE_DETAIL, (route) => false);
+                    context, PROFILE_TAB_SCREEN, (route) => false);
               }),
         ),
       ),
@@ -450,9 +450,6 @@ class _DoctorDetailProfileScreenState extends State<DoctorDetailProfileScreen> {
               textColor: Colors.white,
               color: BUTTON_BLUE,
               onPressed: () async {
-                setState(() {
-                  _status = true;
-                });
                 if (_formKey.currentState.validate()) {
                   await FirebaseFirestore.instance
                       .collection(USER_COLLECTION)

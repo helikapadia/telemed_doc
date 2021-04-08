@@ -32,7 +32,7 @@ class BloodSugarBeforeMeal extends StatelessWidget {
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     fillColor: ALICE_BLUE,
-                    hintText: 'Before Meal Sugar (mg/dL)',
+                    hintText: 'Post Prandial Blood Sugar (mg/dL)',
                   ),
                 ),
               ),

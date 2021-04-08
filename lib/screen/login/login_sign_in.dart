@@ -5,7 +5,7 @@ import 'package:telemed_doc/util/constant.dart';
 class LoginSignIn extends StatelessWidget {
   final LoginBloc loginBloc;
 
-  const LoginSignIn({Key key,@required this.loginBloc}) : super(key: key);
+  const LoginSignIn({Key key, @required this.loginBloc}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<bool>(
@@ -13,11 +13,11 @@ class LoginSignIn extends StatelessWidget {
         builder: (context, snapshot) {
           bool isEnabled = snapshot.data ?? false;
 
-          return FlatButton(
+          return TextButton(
               onPressed: isEnabled
                   ? () {
-                loginBloc.loginUser(context);
-              }
+                      loginBloc.loginUser(context);
+                    }
                   : null,
               child: Container(
                 width: MediaQuery.of(context).size.width - 65,

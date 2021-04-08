@@ -3,10 +3,9 @@ import 'package:telemed_doc/bloc/add_city_bloc/add_city_bloc.dart';
 import 'package:telemed_doc/util/constant.dart';
 
 class AddCitySubmit extends StatelessWidget {
-
   final AddCityBloc addCityBloc;
 
-  const AddCitySubmit({Key key,@required this.addCityBloc}) : super(key: key);
+  const AddCitySubmit({Key key, @required this.addCityBloc}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<bool>(
@@ -14,11 +13,11 @@ class AddCitySubmit extends StatelessWidget {
         builder: (context, snapshot) {
           bool isEnabled = snapshot.data ?? false;
 
-          return FlatButton(
+          return TextButton(
               onPressed: isEnabled
                   ? () {
-                addCityBloc.submitAddCity(context);
-              }
+                      addCityBloc.submitAddCity(context);
+                    }
                   : null,
               child: Container(
                 width: MediaQuery.of(context).size.width - 65,

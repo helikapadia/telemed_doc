@@ -13,7 +13,7 @@ class DailyMedicineSubmitBtn extends StatelessWidget {
         stream: dailyMedicineBloc.submitDailyMedicine,
         builder: (context, snapshot) {
           bool isEnabled = snapshot.data ?? false;
-          return FlatButton(
+          return TextButton(
               onPressed: isEnabled
                   ? () {
                       dailyMedicineBloc.addDailyMedicine(context);

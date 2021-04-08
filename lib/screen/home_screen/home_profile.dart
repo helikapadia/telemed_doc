@@ -12,7 +12,7 @@ class _HomeProfileState extends State<HomeProfile> {
     return Card(
       child: Column(
         children: [
-          FlatButton(
+          TextButton(
             onPressed: () {
               Navigator.pushNamed(context, PROFILE_DETAIL);
             },

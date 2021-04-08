@@ -22,7 +22,7 @@ class LoginPassword extends StatelessWidget {
                   autofocus: true,
                   enableSuggestions: false,
                   keyboardType: TextInputType.visiblePassword,
-                  textInputAction: TextInputAction.next,
+                  textInputAction: TextInputAction.done,
                   textAlign: TextAlign.start,
                   obscureText: true,
                   onChanged: (value) {

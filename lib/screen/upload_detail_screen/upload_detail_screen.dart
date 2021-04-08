@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:telemed_doc/bloc/upload_documents_bloc/upload_documents_bloc.dart';
 import 'package:telemed_doc/screen/upload_detail_screen/attached_report.dart';
 import 'package:telemed_doc/screen/upload_detail_screen/upload_detail_design.dart';
+import 'package:telemed_doc/screen/upload_detail_screen/upload_doc_folder_selection.dart';
+import 'package:telemed_doc/screen/upload_detail_screen/upload_report_date.dart';
 import 'package:telemed_doc/screen/upload_detail_screen/upload_report_description.dart';
 import 'package:telemed_doc/screen/upload_detail_screen/upload_report_pdf.dart';
 import 'package:telemed_doc/screen/upload_detail_screen/upload_report_progress_bar.dart';
@@ -70,6 +72,38 @@ class _UploadDetailScreenState extends State<UploadDetailScreen> {
                           ),
                         ),
                         UploadReportDescription(
+                            uploadDocumentsBloc: uploadDocumentsBloc),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 90, top: 10),
+                          child: Text(
+                            'Select the Folder',
+                            style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.bold,
+                                color: FONT_BLUE,
+                                fontSize: 20),
+                          ),
+                        ),
+                        UploadDocFolderSelection(
+                            uploadDocumentsBloc: uploadDocumentsBloc),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 110, top: 10),
+                          child: Text(
+                            'Date of Report',
+                            style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.bold,
+                                color: FONT_BLUE,
+                                fontSize: 20),
+                          ),
+                        ),
+                        UploadReportDate(
                             uploadDocumentsBloc: uploadDocumentsBloc),
                         const SizedBox(
                           height: 20,

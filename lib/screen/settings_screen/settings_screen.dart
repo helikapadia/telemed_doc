@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:telemed_doc/bloc/settings_bloc/settings_bloc.dart';
-import 'package:telemed_doc/screen/settings_screen/biometric_auth_switch.dart';
 import 'package:telemed_doc/util/constant.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -33,7 +32,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         children: [
           Column(
             children: [
-              BiometricAuthSwitch(settingsBloc: settingsBloc),
+              //BiometricAuthSwitch(settingsBloc: settingsBloc),
             ],
           ),
         ],

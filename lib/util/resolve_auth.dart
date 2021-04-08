@@ -13,7 +13,7 @@ class _ResolveAuthState extends State<ResolveAuth> {
   void initState() {
     super.initState();
     User user = FirebaseAuth.instance.currentUser;
-    debugPrint(user.toString());
+    //debugPrint(user.uid);
 
     if (user != null) {
       AppPreference.getStringF(USER_ID_KEY).then((userId) async {
@@ -23,11 +23,13 @@ class _ResolveAuthState extends State<ResolveAuth> {
         }
         if (user.uid != null && userId == user.uid) {
           bool authValue = await AppPreference.getBoolF(authStatusKey);
-          debugPrint(authValue.toString());
+          debugPrint("124321" + authValue.toString());
           if (authValue != null && authValue) {
+            debugPrint("12345");
             Navigator.pushNamedAndRemoveUntil(
                 context, BIOMETRIC_AUTH, (route) => false);
           } else {
+            debugPrint("345664232");
             Navigator.pushNamedAndRemoveUntil(
                 context, HOME_SCREEN, (route) => false);
           }

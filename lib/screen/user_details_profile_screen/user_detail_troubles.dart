@@ -22,7 +22,7 @@ class UserDetailTrouble extends StatelessWidget {
                   autofocus: true,
                   enableSuggestions: false,
                   keyboardType: TextInputType.multiline,
-                  textInputAction: TextInputAction.done,
+                  textInputAction: TextInputAction.next,
                   textAlign: TextAlign.start,
                   //focusNode: fullNameFocusNode,
                   onChanged: (value) {
@@ -38,7 +38,7 @@ class UserDetailTrouble extends StatelessWidget {
                         : null,
                     fillColor: Colors.white,
                     border: InputBorder.none,
-                    hintText: 'Family History',
+                    hintText: 'Troubles',
                   ),
                 ),
               ),

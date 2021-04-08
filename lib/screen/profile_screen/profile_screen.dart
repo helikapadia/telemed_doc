@@ -2,9 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:telemed_doc/bloc/profile_bloc/profile_bloc.dart';
 import 'package:telemed_doc/util/constant.dart';
 
 class ProfileScreen extends StatefulWidget {
+  final ProfileBloc profileBloc;
+
+  const ProfileScreen({Key key, this.profileBloc}) : super(key: key);
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
@@ -21,6 +25,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController _bloodGroupController = TextEditingController();
   TextEditingController _allergyController = TextEditingController();
   TextEditingController _troubleController = TextEditingController();
+  TextEditingController _familyHistoryController = TextEditingController();
 
   GlobalKey<FormState> _formKey = GlobalKey();
 
@@ -75,6 +80,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 _bloodGroupController.text = snapshot.data["blood_group"];
                 _allergyController.text = snapshot.data["allergies"];
                 _troubleController.text = snapshot.data["troubles"];
+                _familyHistoryController.text = snapshot.data["family_history"];
 
                 return Padding(
                   padding:
@@ -113,6 +119,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisSize: MainAxisSize.min,
                               children: [
+                                //ProfileEmail(profileBloc: widget.profileBloc),
                                 ListTile(
                                   leading: Text(
                                     "Name:",
@@ -430,7 +437,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                               ],
                             ),
-
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ListTile(
+                                  leading: Text(
+                                    "Family History:",
+                                    style: TextStyle(
+                                        fontFamily: 'Poppins', fontSize: 16),
+                                  ),
+                                  title: TextFormField(
+                                    validator: (FamilyHistory) {
+                                      if (FamilyHistory.isEmpty) {
+                                        return "Troubles cannot be empty";
+                                      }
+                                      return null;
+                                    },
+                                    style: TextStyle(
+                                        fontFamily: 'Poppins', fontSize: 16),
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    enableSuggestions: true,
+                                    enabled: !_status,
+                                    controller: _familyHistoryController,
+                                    onChanged: (name) => _updateState,
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none),
+                                  ),
+                                ),
+                              ],
+                            ),
                             !_status ? _getActionButtons() : new Container(),
                           ],
                         ),
@@ -449,6 +490,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 _bloodGroupController.text = snapshot.data["blood_group"];
                 _allergyController.text = snapshot.data["allergies"];
                 _troubleController.text = snapshot.data["troubles"];
+                _familyHistoryController.text = snapshot.data["family_history"];
 
                 return Padding(
                   padding:
@@ -804,7 +846,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                               ],
                             ),
-
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ListTile(
+                                  leading: Text(
+                                    "Family History:",
+                                    style: TextStyle(
+                                        fontFamily: 'Poppins', fontSize: 16),
+                                  ),
+                                  title: TextFormField(
+                                    validator: (FamilyHistory) {
+                                      if (FamilyHistory.isEmpty) {
+                                        return "Troubles cannot be empty";
+                                      }
+                                      return null;
+                                    },
+                                    style: TextStyle(
+                                        fontFamily: 'Poppins', fontSize: 16),
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    enableSuggestions: true,
+                                    enabled: !_status,
+                                    controller: _familyHistoryController,
+                                    onChanged: (name) => _updateState,
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none),
+                                  ),
+                                ),
+                              ],
+                            ),
                             !_status ? _getActionButtons() : new Container(),
                           ],
                         ),
@@ -830,6 +906,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Expanded(
           flex: 2,
           child: Container(
+            // ignore: deprecated_member_use
             child: RaisedButton(
               child: Text("Save"),
               textColor: Colors.white,
@@ -852,6 +929,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     "blood_group": _bloodGroupController.text,
                     "allergies": _allergyController.text,
                     "troubles": _troubleController.text,
+                    "family_history": _familyHistoryController.text
                   });
                 }
               },
@@ -864,6 +942,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Expanded(
           flex: 2,
           child: Container(
+            // ignore: deprecated_member_use
             child: RaisedButton(
               child: Text("Cancel"),
               textColor: Colors.white,

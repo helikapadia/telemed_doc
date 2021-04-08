@@ -74,13 +74,13 @@ class _HomeDrawerState extends State<HomeDrawer> {
   void openScreen(String name) {
     if (name == PROFILE_MENU) {
       Navigator.pushNamedAndRemoveUntil(
-          context, PROFILE_SCREEN, (route) => false);
+          context, PROFILE_TAB_SCREEN, (route) => false);
     } else if (name == SETTINGS_MENU) {
       Navigator.pushNamedAndRemoveUntil(
           context, SETTINGS_SCREEN, (route) => false);
     } else if (name == ANALYSIS_MENU) {
       Navigator.pushNamedAndRemoveUntil(
-          context, ANALYSIS_SCREEN, (route) => false);
+          context, MANUAL_ANALYSIS_SCREEN, (route) => false);
     } else if (name == DOCUMENTS_MENU) {
       Navigator.pushNamedAndRemoveUntil(
           context, DOCUMENT_DISPLAY_SCREEN, (route) => false);

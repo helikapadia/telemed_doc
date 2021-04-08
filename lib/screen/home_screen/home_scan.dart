@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:telemed_doc/util/constant.dart';
@@ -10,7 +8,6 @@ class HomeScan extends StatefulWidget {
 }
 
 class _HomeScanState extends State<HomeScan> {
-  File scannedDcoument;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -19,15 +16,6 @@ class _HomeScanState extends State<HomeScan> {
           FlatButton(
             onPressed: () {
               Navigator.pushNamed(context, SCAN_DOC_ROUTE);
-              // FlutterGeniusScan.scanWithConfiguration({
-              //   'source': 'camera',
-              //   'multiPage': true,
-              // }).then((result) {
-              //   String pdfUrl = result['pdfUrl'];
-              //   OpenFile.open(pdfUrl.replaceAll("file://", '')).then(
-              //       (result) => debugPrint('$result'),
-              //       onError: (error) => displayError(context, error));
-              // }, onError: (error) => displayError(context, error));
             },
             child: Text(
               'Scan Documents',

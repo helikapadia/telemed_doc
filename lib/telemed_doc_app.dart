@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:telemed_doc/screen/add_city/add_city_screen.dart';
+import 'package:telemed_doc/screen/add_family/add_family_screen.dart';
+import 'package:telemed_doc/screen/analysis/analysis_screen.dart';
 import 'package:telemed_doc/screen/analysis/manual_analysis/manual_analysis_screen.dart';
 import 'package:telemed_doc/screen/daily_medicine/daily_medicine_screen.dart';
 import 'package:telemed_doc/screen/doctor_details/doctor_details_screen.dart';
+import 'package:telemed_doc/screen/document_display/document_display_detail_screen.dart';
 import 'package:telemed_doc/screen/emergency_contact/emergency_contact_screen.dart';
 import 'package:telemed_doc/screen/forgot_password/forgot_password_screen.dart';
-import 'package:telemed_doc/screen/home_screen/document_display.dart';
 import 'package:telemed_doc/screen/home_screen/home_screen.dart';
 import 'package:telemed_doc/screen/login/login_screen.dart';
 import 'package:telemed_doc/screen/profile_screen/daily_medicine_profile/daily_medicine_profile.dart';
 import 'package:telemed_doc/screen/profile_screen/doctor_detail_profile/doctor_detail_profile_screen.dart';
 import 'package:telemed_doc/screen/profile_screen/emergency_profile_screen/emergency_profile_screen.dart';
+import 'package:telemed_doc/screen/profile_screen/family_member_profile/family_member_profile.dart';
 import 'package:telemed_doc/screen/profile_screen/profile_detail.dart';
 import 'package:telemed_doc/screen/profile_screen/profile_screen.dart';
+import 'package:telemed_doc/screen/profile_screen/profile_tab_screen.dart';
 import 'package:telemed_doc/screen/registration/registration_screen.dart';
 import 'package:telemed_doc/screen/scan_doc/scan_doc_screen.dart';
 import 'package:telemed_doc/screen/settings_screen/biometric_auth.dart';
@@ -21,7 +25,8 @@ import 'package:telemed_doc/screen/upload_detail_screen/upload_detail_screen.dar
 import 'package:telemed_doc/screen/user_details_profile_screen/user_details_profile_screen.dart';
 // import 'package:telemed_doc/screen/view_pdf/view_pdf.dart';
 import 'package:telemed_doc/util/constant.dart';
-import 'package:telemed_doc/util/resolve_auth.dart';
+
+import 'file:///D:/office%20work/telemed_doc/lib/screen/document_display/document_display.dart';
 
 class TeleMedDocApp extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -66,7 +71,7 @@ class TeleMedDocApp extends StatelessWidget {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(builder: (context) {
-          return ResolveAuth();
+          return HomeScreen();
         });
         break;
       case REGISTER_ROUTE:
@@ -129,6 +134,11 @@ class TeleMedDocApp extends StatelessWidget {
           return ProfileScreen();
         });
         break;
+      case PROFILE_TAB_SCREEN:
+        return MaterialPageRoute(builder: (context) {
+          return ProfileTabScreen();
+        });
+        break;
       case PROFILE_DETAIL:
         return MaterialPageRoute(builder: (context) {
           return ProfileDetail();
@@ -169,11 +179,30 @@ class TeleMedDocApp extends StatelessWidget {
           return SettingsScreen();
         });
         break;
-      case ANALYSIS_SCREEN:
+      case MANUAL_ANALYSIS_SCREEN:
         return MaterialPageRoute(builder: (context) {
           return ManualAnalysisScreen();
         });
         break;
+      case ANALYSIS_SCREEN:
+        return MaterialPageRoute(builder: (context) {
+          return AnalysisScreen();
+        });
+        break;
+      case ADD_FAMILY:
+        return MaterialPageRoute(builder: (context) {
+          return AddFamilyScreen();
+        });
+        break;
+      case FAMILY_MEMBER_PROFILE_SCREEN:
+        return MaterialPageRoute(builder: (context) {
+          return FamilyMemberProfileScreen();
+        });
+        break;
+      case DOCUMENT_DISPLAY_DETAIL_SCREEN:
+        return MaterialPageRoute(builder: (context) {
+          return DocumentDisplayDetailScreen();
+        });
       // case PDF_VIEW:
       //   return MaterialPageRoute(builder: (context) {
       //     return ViewPDF();

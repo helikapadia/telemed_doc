@@ -21,6 +21,7 @@ class UserProfileDetailBloc with UserProfileDetailValidators {
   final _bloodGroup = BehaviorSubject<String>();
   final _allergy = BehaviorSubject<String>();
   final _trouble = BehaviorSubject<String>();
+  final _familyHistory = BehaviorSubject<String>();
 
   Stream<bool> get progress => _showProgress.stream;
   Stream<String> get fullName => _fullName.stream.transform(fullNameValidator);
@@ -37,6 +38,7 @@ class UserProfileDetailBloc with UserProfileDetailValidators {
   Stream<String> get bloodGroup => _bloodGroup.stream;
   Stream<String> get allergy => _allergy.stream;
   Stream<String> get trouble => _trouble.stream;
+  Stream<String> get familyHistory => _familyHistory.stream;
 
   bool get progressBarValue => _showProgress.stream.value;
   String get fullNameValue => _fullName.stream.value;
@@ -51,6 +53,7 @@ class UserProfileDetailBloc with UserProfileDetailValidators {
   String get bloodGroupValue => _bloodGroup.stream.value;
   String get allergyValue => _allergy.stream.value;
   String get troubleValue => _trouble.stream.value;
+  String get familyHistoryValue => _familyHistory.stream.value;
 
   Function(bool) get showProgress => _showProgress.sink.add;
   Function(String) get fullNameChanged => _fullName.sink.add;
@@ -65,9 +68,17 @@ class UserProfileDetailBloc with UserProfileDetailValidators {
   Function(String) get changeBloodGroup => _bloodGroup.sink.add;
   Function(String) get changeAllergy => _allergy.sink.add;
   Function(String) get changeTrouble => _trouble.sink.add;
+  Function(String) get changeFamilyHistory => _familyHistory.sink.add;
 
-  Stream<bool> get submitUserDetail => Rx.combineLatest6(age, phoneNumber, dob,
-      bloodGroup, allergy, trouble, (a, ph, d, bg, all, tr) => true);
+  Stream<bool> get submitUserDetail => Rx.combineLatest7(
+      age,
+      phoneNumber,
+      dob,
+      bloodGroup,
+      allergy,
+      trouble,
+      familyHistory,
+      (a, ph, d, bg, all, tr, fh) => true);
 
   void addDoctorDetails(BuildContext context) {
     hideKeyboard(context);
@@ -80,6 +91,7 @@ class UserProfileDetailBloc with UserProfileDetailValidators {
             .doc(userIdVal);
         await documentReference.get().then((doc) async {
           if (doc.exists) {
+            debugPrint("hel");
             await documentReference.update({
               // FULL_NAME_KEY: fullNameValue,
               AGE_KEY: ageValue,
@@ -90,6 +102,7 @@ class UserProfileDetailBloc with UserProfileDetailValidators {
               BLOOD_GROUP_KEY: bloodGroupValue,
               ALLERGIES_KEY: allergyValue,
               TROUBLES_KEY: troubleValue,
+              FAMILY_HISTORY_KEY: familyHistoryValue,
             }).then((value) async {
               showProgress(false);
               // fullNameChanged(fullNameValue);
@@ -101,20 +114,24 @@ class UserProfileDetailBloc with UserProfileDetailValidators {
               changeBloodGroup(bloodGroupValue);
               changeAllergy(allergyValue);
               changeTrouble(troubleValue);
-              await AppPreference.setString(FULL_NAME_KEY, fullNameValue);
+              changeFamilyHistory(familyHistoryValue);
+              //await AppPreference.setString(FULL_NAME_KEY, fullNameValue);
               await AppPreference.setString(AGE_KEY, ageValue);
-              await AppPreference.setString(GENDER_KEY, genderValue);
-              await AppPreference.setString(EMAIL_KEY, emailValue);
+              // await AppPreference.setString(GENDER_KEY, genderValue);
+              //await AppPreference.setString(EMAIL_KEY, emailValue);
               await AppPreference.setString(DOB_KEY, dobValue);
               await AppPreference.setString(BLOOD_GROUP_KEY, bloodGroupValue);
               await AppPreference.setString(PHONE_NUMBER_KEY, phoneNumberValue);
               await AppPreference.setString(ALLERGIES_KEY, allergyValue);
               await AppPreference.setString(TROUBLES_KEY, troubleValue);
+              await AppPreference.setString(
+                  FAMILY_HISTORY_KEY, familyHistoryValue);
+              debugPrint("hel");
               showDialogAndNavigate(
                   DATA_ADDED_SUCCESSFULLY, context, DOCTOR_DETAIL_SCREEN);
             }).catchError((errors) {
               showProgress(false);
-              showMessageDialog(errors.msg, context);
+              showMessageDialog(errors.message, context);
             });
           } else {
             await documentReference.set({
@@ -127,6 +144,7 @@ class UserProfileDetailBloc with UserProfileDetailValidators {
               BLOOD_GROUP_KEY: bloodGroupValue,
               ALLERGIES_KEY: allergyValue,
               TROUBLES_KEY: troubleValue,
+              FAMILY_HISTORY_KEY: familyHistoryValue,
             }).then((value) async {
               showProgress(false);
               fullNameChanged(fullNameValue);
@@ -138,6 +156,7 @@ class UserProfileDetailBloc with UserProfileDetailValidators {
               changeBloodGroup(bloodGroupValue);
               changeAllergy(allergyValue);
               changeTrouble(troubleValue);
+              changeFamilyHistory(familyHistoryValue);
               await AppPreference.setString(FULL_NAME_KEY, fullNameValue);
               await AppPreference.setString(AGE_KEY, ageValue);
               await AppPreference.setString(GENDER_KEY, genderValue);
@@ -147,6 +166,8 @@ class UserProfileDetailBloc with UserProfileDetailValidators {
               await AppPreference.setString(PHONE_NUMBER_KEY, phoneNumberValue);
               await AppPreference.setString(ALLERGIES_KEY, allergyValue);
               await AppPreference.setString(TROUBLES_KEY, troubleValue);
+              await AppPreference.setString(
+                  FAMILY_HISTORY_KEY, familyHistoryValue);
             }).catchError((errors) {
               showProgress(false);
               showMessageDialog(errors.msg, context);
@@ -173,5 +194,6 @@ class UserProfileDetailBloc with UserProfileDetailValidators {
     _fullName?.close();
     _modalEmail?.close();
     _modalFullName?.close();
+    _familyHistory?.close();
   }
 }

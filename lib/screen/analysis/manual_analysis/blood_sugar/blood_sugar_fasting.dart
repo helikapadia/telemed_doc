@@ -23,7 +23,7 @@ class BloodSugarFasting extends StatelessWidget {
                   autofocus: true,
                   enableSuggestions: false,
                   keyboardType: TextInputType.number,
-                  textInputAction: TextInputAction.done,
+                  textInputAction: TextInputAction.next,
                   textAlign: TextAlign.start,
                   onChanged: (value) {
                     manualAnalysisBloc.changeBsFast(value);

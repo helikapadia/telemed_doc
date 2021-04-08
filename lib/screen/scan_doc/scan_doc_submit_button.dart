@@ -12,7 +12,7 @@ class ScanDocSubmit extends StatelessWidget {
         stream: scanBloc.submitCheck,
         builder: (context, snapshot) {
           bool isEnabled = snapshot.data ?? false;
-          return FlatButton(
+          return TextButton(
               onPressed: isEnabled
                   ? () {
                       scanBloc.pdfMake(context);

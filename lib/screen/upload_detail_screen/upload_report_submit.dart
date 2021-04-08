@@ -13,7 +13,7 @@ class UploadReportSubmit extends StatelessWidget {
         stream: uploadDocumentsBloc.submitReportDetail,
         builder: (context, snapshot) {
           bool isEnabled = snapshot.data ?? false;
-          return FlatButton(
+          return TextButton(
               onPressed: isEnabled
                   ? () {
                       uploadDocumentsBloc.uploadFile(context);

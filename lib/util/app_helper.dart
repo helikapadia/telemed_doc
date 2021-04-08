@@ -13,7 +13,7 @@ class AppHelper {
             title: Text(alertTitle),
             content: Text(alertBody),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },

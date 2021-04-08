@@ -63,10 +63,10 @@ class RegistrationBloc with RegistrationValidators {
           await AppPreference.setString(USER_FULL_NAME, fullNameValue);
           await AppPreference.setString(USER_GENDER, genderValue);
 
-          await Firestore.instance
+          await FirebaseFirestore.instance
               .collection(USER_COLLECTION)
-              .document(authResult.user.uid)
-              .setData({
+              .doc(authResult.user.uid)
+              .set({
             EMAIL_KEY: emailValue,
             GENDER_KEY: genderValue,
             FULL_NAME_KEY: fullNameValue,

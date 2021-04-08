@@ -14,7 +14,7 @@ class ForgotPasswordNext extends StatelessWidget {
         builder: (context, snapshot) {
           bool isEnabled = snapshot.data ?? false;
 
-          return FlatButton(
+          return TextButton(
               onPressed: isEnabled
                   ? () {
                       forgotPasswordBloc.requestPasswordReset(context);

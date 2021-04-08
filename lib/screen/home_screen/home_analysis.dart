@@ -13,14 +13,25 @@ class _HomeAnalysisState extends State<HomeAnalysis> {
     return Card(
       child: Column(
         children: [
-          FlatButton(
-              onPressed: (){},
-              child: Text('Analysis Reports', style: TextStyle(fontFamily: 'Poppins', color: FONT_BLUE, fontSize: 14),),
+          // ignore: deprecated_member_use
+          TextButton(
+            onPressed: () {
+              Navigator.pushNamed(context, ANALYSIS_SCREEN);
+            },
+            child: Text(
+              'Analysis Reports',
+              style: TextStyle(
+                  fontFamily: 'Poppins', color: FONT_BLUE, fontSize: 14),
+            ),
           ),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Image.asset('images/Analysis Data.png', height: 178, width: 153,),
+              Image.asset(
+                'images/Analysis Data.png',
+                height: 178,
+                width: 153,
+              ),
             ],
           )
         ],

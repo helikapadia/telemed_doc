@@ -104,7 +104,7 @@ class ManualAnalysisBloc {
                   DATA_ADDED_SUCCESSFULLY, context, HOME_SCREEN);
             }).catchError((errors) {
               showProgress(false);
-              showMessageDialog(errors.msg, context);
+              showMessageDialog(errors.message, context);
             });
           }
         });

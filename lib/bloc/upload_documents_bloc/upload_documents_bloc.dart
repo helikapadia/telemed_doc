@@ -7,7 +7,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:telemed_doc/util/app_helper.dart';
 import 'package:telemed_doc/util/constant.dart';
@@ -22,6 +24,8 @@ class UploadDocumentsBloc {
   final _fileUrl = BehaviorSubject<List<ReportPDFUploadModel>>();
   final _reportId = BehaviorSubject<String>();
   final _reportDate = BehaviorSubject<String>();
+  final _reportFolder = BehaviorSubject<String>();
+  final _file = BehaviorSubject<File>();
 
   List<ReportPDFUploadModel> selectedFiles = [];
 
@@ -33,6 +37,8 @@ class UploadDocumentsBloc {
   Stream<List<ReportPDFUploadModel>> get fileUrl => _fileUrl.stream;
   Stream<String> get reportId => _reportId.stream;
   Stream<String> get reportDate => _reportDate.stream;
+  Stream<String> get reportFolder => _reportFolder.stream;
+  Stream<File> get file1 => _file.stream;
 
   DateFormat formatter = DateFormat('MMMM dd, yyyy');
 
@@ -44,6 +50,8 @@ class UploadDocumentsBloc {
   List<ReportPDFUploadModel> get fileUrlValue => _fileUrl.stream.value;
   String get reportIdValue => _reportId.stream.value;
   String get reportDateValue => _reportDate.stream.value;
+  String get reportFolderValue => _reportFolder.stream.value;
+  File get fileValue => _file.stream.value;
 
   Function(bool) get showProgress => _showProgress.sink.add;
   Function(bool) get isKeyboardOpenChanged => _isKeyboardOpen.sink.add;
@@ -53,13 +61,15 @@ class UploadDocumentsBloc {
   Function(List<ReportPDFUploadModel>) get fileUrlChanged => _fileUrl.sink.add;
   Function(String) get reportIdChanged => _reportId.sink.add;
   Function(String) get reportDateChanged => _reportDate.sink.add;
+  Function(String) get reportFolderChanged => _reportFolder.sink.add;
+  Function(File) get changeFile => _file.sink.add;
 
   void getReportId() {
     reportIdChanged(DateTime.now().toUtc().millisecondsSinceEpoch.toString());
   }
 
-  Stream<bool> get submitReportDetail =>
-      Rx.combineLatest2(reportName, reportDescription, (rn, rd) => true);
+  Stream<bool> get submitReportDetail => Rx.combineLatest4(reportName,
+      reportDescription, reportFolder, reportDate, (rn, rd, rf, rdate) => true);
   // Stream<bool> get enableSubmitCheck =>
   //     reportName.map((s) => s.isNotEmpty && selectedFiles.isNotEmpty);
   File file;
@@ -114,6 +124,7 @@ class UploadDocumentsBloc {
               "blood_report_link": link,
               REPORT_NAME: reportNameValue,
               REPORT_DESCRIPTION: reportDescriptionValue,
+              REPORT_FOLDER_NAME: reportFolderValue,
               REPORT_DATE: reportDateValue
             });
             showProgress(false);
@@ -156,6 +167,31 @@ class UploadDocumentsBloc {
     }
   }
 
+  Future<void> downloadFile(link) async {
+    showProgress(false);
+    await AppHelper.checkInternetConnection().then((isAvailable) async {
+      if (isAvailable) {
+        try {
+          var data = await http.get(link);
+          var bytes = data.bodyBytes;
+          var dir = await getApplicationDocumentsDirectory();
+          var userIdVal = FirebaseAuth.instance.currentUser.uid;
+          print(reportId);
+          File file = File(
+              "REPORT_PDF/$userIdVal/BLOOD_REPORT/$reportId/BLOOD_REPORT.pdf");
+          File tempFile = await file.writeAsBytes(bytes);
+          showProgress(false);
+          changeFile(tempFile);
+          return file;
+        } on Exception catch (e) {
+          showProgress(false);
+        }
+      } else {
+        showProgress(false);
+      }
+    });
+  }
+
   void dispose() {
     _showProgress?.close();
     _fileUrl?.close();
@@ -163,6 +199,8 @@ class UploadDocumentsBloc {
     _reportId?.close();
     _reportName?.close();
     _reportDescription?.close();
+    _reportFolder?.close();
+    _file?.close();
   }
 }
 

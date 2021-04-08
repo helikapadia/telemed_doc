@@ -4,6 +4,7 @@ import 'package:telemed_doc/screen/analysis/manual_analysis/blood_pressure/blood
 import 'package:telemed_doc/screen/analysis/manual_analysis/blood_pressure/blood_pressure_sys.dart';
 import 'package:telemed_doc/screen/analysis/manual_analysis/blood_sugar/blood_sugar_before_meal.dart';
 import 'package:telemed_doc/screen/analysis/manual_analysis/blood_sugar/blood_sugar_fasting.dart';
+import 'package:telemed_doc/screen/analysis/manual_analysis/manual_analysis_date.dart';
 import 'package:telemed_doc/screen/analysis/manual_analysis/manual_analysis_submit_btn.dart';
 import 'package:telemed_doc/util/constant.dart';
 
@@ -150,7 +151,7 @@ class _ManualAnalysisScreenState extends State<ManualAnalysisScreen> {
                                 padding:
                                     const EdgeInsets.only(right: 60, top: 10),
                                 child: Text(
-                                  'Before Meal Sugar: ',
+                                  'Post Prandial Blood Sugar: ',
                                   style: TextStyle(
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.bold,
@@ -163,6 +164,12 @@ class _ManualAnalysisScreenState extends State<ManualAnalysisScreen> {
                             ],
                           ),
                         ),
+                      ),
+                      ManualAnalysisDate(
+                        manualAnalysisBloc: manualAnalysisBloc,
+                      ),
+                      const SizedBox(
+                        height: 20,
                       ),
                       ManualAnalysisSubmitButton(
                           manualAnalysisBloc: manualAnalysisBloc),

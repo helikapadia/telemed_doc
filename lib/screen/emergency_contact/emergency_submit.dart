@@ -5,7 +5,8 @@ import 'package:telemed_doc/util/constant.dart';
 class EmergencySubmit extends StatelessWidget {
   final EmergencyBloc emergencyBloc;
 
-  const EmergencySubmit({Key key,@required this.emergencyBloc}) : super(key: key);
+  const EmergencySubmit({Key key, @required this.emergencyBloc})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,11 +15,11 @@ class EmergencySubmit extends StatelessWidget {
         builder: (context, snapshot) {
           bool isEnabled = snapshot.data ?? false;
 
-          return FlatButton(
+          return TextButton(
               onPressed: isEnabled
                   ? () {
-                emergencyBloc.submitEmergencyDetails(context);
-              }
+                      emergencyBloc.submitEmergencyDetails(context);
+                    }
                   : null,
               child: Container(
                 width: MediaQuery.of(context).size.width - 65,

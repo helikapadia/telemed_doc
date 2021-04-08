@@ -19,7 +19,7 @@ class _ScannedDocumentFolderSelectionState
 
   @override
   Widget build(BuildContext context) {
-    String dropDownValue = 'Blood Report';
+    String dropDownValue = 'Pathological Reports';
 
     return StreamBuilder<String>(
         stream: widget.scanBloc.reportFolder,
@@ -30,22 +30,18 @@ class _ScannedDocumentFolderSelectionState
               color: ALICE_BLUE,
               elevation: 3,
               child: Padding(
-                padding: const EdgeInsets.only(right: 110),
+                padding: const EdgeInsets.only(right: 90),
                 child: DropdownButton<String>(
-                  hint: Text('Select the Folder'),
+                  hint: Text('Select Folder'),
                   value: currentValue,
                   items: [
                     DropdownMenuItem(
-                      child: Text('Blood Report'),
-                      value: 'Blood Report',
+                      child: Text('Pathological Report'),
+                      value: 'Pathological Report',
                     ),
                     DropdownMenuItem(
-                      child: Text('X-Ray'),
-                      value: 'X-Ray',
-                    ),
-                    DropdownMenuItem(
-                      child: Text('CT Scan'),
-                      value: 'CT Scan',
+                      child: Text('Radiological Imaging'),
+                      value: 'Radiological Imaging',
                     ),
                     DropdownMenuItem(
                       child: Text('Prescription'),

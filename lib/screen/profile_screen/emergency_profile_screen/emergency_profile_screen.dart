@@ -34,7 +34,7 @@ class _EmergencyProfileScreenState extends State<EmergencyProfileScreen> {
               ),
               onPressed: () {
                 Navigator.pushNamedAndRemoveUntil(
-                    context, PROFILE_DETAIL, (route) => false);
+                    context, PROFILE_TAB_SCREEN, (route) => false);
               }),
         ),
       ),

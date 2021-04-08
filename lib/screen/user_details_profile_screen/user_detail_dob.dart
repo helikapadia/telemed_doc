@@ -7,12 +7,12 @@ import 'package:telemed_doc/util/constant.dart';
 
 class UserDetailDob extends StatefulWidget {
   final UserProfileDetailBloc userProfileDetailBloc;
-  final FocusNode dateOfBorthFocusNode;
+  final FocusNode dateOfBirthFocusNode;
 
   const UserDetailDob(
       {Key key,
       @required this.userProfileDetailBloc,
-      this.dateOfBorthFocusNode})
+      this.dateOfBirthFocusNode})
       : super(key: key);
 
   @override

@@ -8,7 +8,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:rxdart/rxdart.dart';
 import 'package:telemed_doc/util/app_helper.dart';
@@ -25,7 +24,7 @@ class ScanBloc {
   final _reportDate = BehaviorSubject<String>();
   final _reportFolder = BehaviorSubject<String>();
 
-  Stream<bool> get Progress => _showProgress.stream;
+  Stream<bool> get showProgress => _showProgress.stream;
   Stream<bool> get isKeyboardOpen => _isKeyboardOpen.stream;
   Stream<String> get reportName => _reportName.stream;
   Stream<String> get reportDescription => _reportDescription.stream;
@@ -61,16 +60,8 @@ class ScanBloc {
         isFromLib: null, img: null, identifier: null, epochTimeStamp: null)
   ];
 
-  Stream<bool> get submitCheck => Rx.combineLatest3(
-      reportName,
-      reportDescription,
-      reportFolder,
-      (
-        rn,
-        rd,
-        rf,
-      ) =>
-          true);
+  Stream<bool> get submitCheck => Rx.combineLatest4(reportName,
+      reportDescription, reportFolder, reportDate, (rn, rd, rf, rdate) => true);
 
   var image;
 
@@ -106,8 +97,9 @@ class ScanBloc {
   var userIdVal = FirebaseAuth.instance.currentUser.uid;
   void pdfMake(BuildContext context) async {
     if (image != null) {
-      final img1 =
-          PdfImage.file(pdf.document, bytes: File(image).readAsBytesSync());
+      // final img1 =
+      //     PdfImage.file(pdf.document, bytes: File(image).readAsBytesSync());
+      final img1 = pw.MemoryImage(File(image).readAsBytesSync());
       // final img1 = PdfImage.file(pdf.document, bytes: image.path. );
       pdf.addPage(pw.Page(build: (pw.Context context) {
         return pw.Center(
@@ -135,12 +127,12 @@ class ScanBloc {
             var userIdVal = FirebaseAuth.instance.currentUser.uid;
             final reportId = Uuid().v4();
             Reference _storageReference = FirebaseStorage.instance.ref().child(
-                "REPORT_PDF/$userIdVal/BLOOD_REPORT/$reportId/$reportName.pdf");
+                "REPORT_PDF/$userIdVal/$reportFolderValue/$reportId/$reportName.pdf");
             await _storageReference.putFile(file);
             String link = await _storageReference.getDownloadURL();
             print("123     " + link);
             await FirebaseFirestore.instance
-                .collection(USER_COLLECTION + "/$userIdVal/$reportFolderValue")
+                .collection(USER_COLLECTION + "/$userIdVal/reports")
                 .doc(reportId)
                 .set({
               "blood_report_id": reportId,
@@ -190,5 +182,6 @@ class ScanBloc {
     _reportId?.close();
     _reportName?.close();
     _reportDescription?.close();
+    _reportDate?.close();
   }
 }
